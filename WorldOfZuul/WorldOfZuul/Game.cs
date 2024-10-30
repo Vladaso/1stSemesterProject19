@@ -12,6 +12,8 @@
 
         private void CreateRooms()
         {
+            //Code bellow creates ROOMS, outside,theatre,pub... are the names for rooms
+            //First "" is Name of the room , second "" is LongDescription
   
             Room? outside = new("Outside", "You are standing outside the main entrance of the university. To the east is a large building, to the south is a computing lab, and to the west is the campus pub.");
             Room? theatre = new("Theatre", "You find yourself inside a large lecture theatre. Rows of seats ascend up to the back, and there's a podium at the front. It's quite dark and quiet.");
@@ -19,9 +21,11 @@
             Room? lab = new("Lab", "You're in a computing lab. Desks with computers line the walls, and there's an office to the east. The hum of machines fills the room.");
             Room? office = new("Office", "You've entered what seems to be an administration office. There's a large desk with a computer on it, and some bookshelves lining one wall.");
 
+            //Code bellow creates possible exits for exact room
+
             outside.SetExits(null, theatre, lab, pub); // North, East, South, West
 
-            theatre.SetExit("west", outside);
+            theatre.SetExit("west", outside); //To get to theatre you have to type East in Outside room..
 
             pub.SetExit("east", outside);
 
@@ -41,7 +45,7 @@
             bool continuePlaying = true;
             while (continuePlaying)
             {
-                Console.WriteLine(currentRoom?.ShortDescription);
+                Console.WriteLine(currentRoom?.RoomName);
                 Console.Write("> ");
 
                 string? input = Console.ReadLine();
