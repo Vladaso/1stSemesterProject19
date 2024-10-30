@@ -7,6 +7,9 @@
 
         //Long / detailed  Description for ROOM
         public string LongDescription { get; private set;}
+
+        //Room Items List
+        public List<Room> RoomItems {get; private set;}
         public Dictionary<string, Room> Exits { get; private set; } = new();
 
         public Room(string roomName, string longDesc)
