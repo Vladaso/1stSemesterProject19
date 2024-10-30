@@ -2,16 +2,20 @@
 {
     public class Room
     {
-        public string ShortDescription { get; private set; }
+        //Name for ROOM
+        public string RoomName { get; private set; }
+
+        //Long / detailed  Description for ROOM
         public string LongDescription { get; private set;}
         public Dictionary<string, Room> Exits { get; private set; } = new();
 
-        public Room(string shortDesc, string longDesc)
+        public Room(string roomName, string longDesc)
         {
-            ShortDescription = shortDesc;
+            RoomName = roomName;
             LongDescription = longDesc;
         }
 
+        //Code bellow asigns exits for Room class
         public void SetExits(Room? north, Room? east, Room? south, Room? west)
         {
             SetExit("north", north);
@@ -20,6 +24,7 @@
             SetExit("west", west);
         }
 
+        //SetExit method will asign exits you want to be available in Room
         public void SetExit(string direction, Room? neighbor)
         {
             if (neighbor != null)
