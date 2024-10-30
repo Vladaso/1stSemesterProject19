@@ -1,5 +1,5 @@
 ﻿/*
- * World of Zuul is a simple text adventure game that applies the principles of Object-Oriented Programming (OOP) and the SOLID principles:
+World of Zuul is a simple text adventure game that applies the principles of Object-Oriented Programming (OOP) and the SOLID principles:
 
 ### OOP Principles
 

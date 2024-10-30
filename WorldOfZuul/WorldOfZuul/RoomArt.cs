@@ -2,10 +2,10 @@ using System;
 
 public class RoomArt
 {
-    public static void Main()
+    public static void Main2() //! Had to rename this, becasue of error code (cant use 2 Mains..)
     {
         // Actually is 86 characters wide and 26 characters tall because of the newline at the start and end
-        string room1 = @"
+/* string room1 = @"
 ┌────────────────────────────────────────────────────────────────────────────────────┐
 │                                                |>>>                                │
 │                                                |                                   │
@@ -111,7 +111,7 @@ string cave_room2 = @"
 │──── ─────────── └───┘ ──── └────│──────┘ ─────────── └────────┘ ─────────└─────┘ ──│
 │ ────────────────────────────────  ──────────────────────  ─────────────────────────│
 └────────────────────────────────────────────────────────────────────────────────────┘
-";
+"; */
 
         //Console.WriteLine(room1);
     }
