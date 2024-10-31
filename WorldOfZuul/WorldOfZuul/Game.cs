@@ -21,6 +21,11 @@
             Room? lab = new("Lab", "You're in a computing lab. Desks with computers line the walls, and there's an office to the east. The hum of machines fills the room.");
             Room? office = new("Office", "You've entered what seems to be an administration office. There's a large desk with a computer on it, and some bookshelves lining one wall.");
 
+
+            //Test Room
+
+            Room? test_room = new("TestRoom","This is test room"); //-> add RoomArt from list
+
             //Code bellow creates possible exits for exact room
 
             outside.SetExits(null, theatre, lab, pub); // North, East, South, West
