@@ -32,7 +32,7 @@ namespace WorldOfZuul
                 return "east";
             }
             else{
-                raise new Exception("Invalid direction");
+                throw new Exception("Invalid direction");
             }
         }
     }
