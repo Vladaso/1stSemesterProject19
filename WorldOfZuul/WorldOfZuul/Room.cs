@@ -4,6 +4,7 @@
     {
         //Name for ROOM
         public string RoomName { get; private set; }
+        public int id { get; private set; }
 
         //Long / detailed  Description for ROOM
         public string LongDescription { get; private set;}
@@ -12,8 +13,9 @@
         public List<Room> RoomItems {get; private set;}
         public Dictionary<string, Room> Exits { get; private set; } = new();
 
-        public Room(string roomName, string longDesc)
+        public Room(int id, string roomName, string longDesc)
         {
+            this.id = id;
             RoomName = roomName;
             LongDescription = longDesc;
         }

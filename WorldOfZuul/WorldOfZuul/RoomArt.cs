@@ -1,5 +1,8 @@
 using System.Collections.Generic;
-public class RoomArt
+
+namespace WorldOfZuul
+{
+    public class RoomArt
 {
     public List<string> Rooms { get; private set; }
     public RoomArt()
@@ -279,4 +282,4 @@ public class RoomArt
         Rooms.Add(roomArt);
     }
 }
-
+}
