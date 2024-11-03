@@ -11,12 +11,12 @@ namespace WorldOfZuul
     
         public Edge(int con1, int con2, string dir){
             con1start = con1;
-            con2end = con2;
+            con1end = con2;
             direction1 = dir;
 
             direction2 = changeDirection(dir);
             con2start = con2;
-            con1end = con1;
+            con2end = con1;
         }
         private string changeDirection(string direction){
             if (direction == "north"){

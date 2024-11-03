@@ -1,30 +1,25 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace WorldOfZuul
 {
     public class Parser
     {
-        private readonly CommandWords commandWords = new();
-
-        public Command? GetCommand(string inputLine)
+        public char ReadAction(char[] possibleMoves)
         {
-            string[] words = inputLine.Split();
 
-            if (words.Length == 0 || !commandWords.IsValidCommand(words[0]))
+            ConsoleKeyInfo key = Console.ReadKey(intercept: true);
+            char return_key = key.KeyChar;
+            return_key = char.ToLower(return_key);
+            // A very nice way to check if a key is in an array
+            while(!Array.Exists(possibleMoves, element => element == return_key))
             {
-                return null;
+                Console.WriteLine("Invalid Action");
+                key = Console.ReadKey(intercept: true);
+                return_key = key.KeyChar;
+                return_key = char.ToLower(return_key);
             }
-
-            if (words.Length > 1)
-            {
-                return new Command(words[0], words[1]);
-            }
-
-            return new Command(words[0]);
+            return return_key;
         }
     }
 
