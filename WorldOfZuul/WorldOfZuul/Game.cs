@@ -55,6 +55,7 @@
                 }
             }
             return possibleMoves.ToArray();
+            // Sohuld be extended to item actions
         }
 
         public void Play()
