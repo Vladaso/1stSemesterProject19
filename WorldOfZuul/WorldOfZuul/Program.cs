@@ -83,6 +83,8 @@ namespace WorldOfZuul
         public static void Main()
         {
             WelcomeArt2.ShowTutorial2();
+            Game game = new();
+            game.Play();
         }
     }
 }

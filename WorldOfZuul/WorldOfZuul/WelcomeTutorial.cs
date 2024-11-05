@@ -68,9 +68,6 @@ namespace WorldOfZuul
             Console.WriteLine("\x1b[J");
             Console.Clear();
 
-            Game game = new();
-            game.Play();
-
 
         }
 

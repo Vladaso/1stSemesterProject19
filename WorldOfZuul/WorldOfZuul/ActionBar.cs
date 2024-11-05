@@ -48,11 +48,4 @@ namespace WorldOfZuul
         }
     }
 
-        /// <summary>
-        /// Create a player object - temporary until class implemented.
-        /// </summary>
-        public class Player
-        {
-            // Player class created
-        }
 }
