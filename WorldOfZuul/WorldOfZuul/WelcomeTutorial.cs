@@ -69,7 +69,7 @@ namespace WorldOfZuul
             Console.Clear();
 
             Game game = new();
-
+            game.Play();
 
 
         }
