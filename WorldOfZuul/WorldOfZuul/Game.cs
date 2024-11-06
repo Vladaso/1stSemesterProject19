@@ -74,7 +74,13 @@
                 Console.WriteLine(roomArt.Rooms[player.Position]); // Temporary for Now
 
                 char[] possibleMoves = GetPossibleMoves();
-                Console.WriteLine("Possible Moves: " + new string(possibleMoves));
+
+                // Action Bar
+                ActionBar actionBar = new ActionBar(possibleMoves);
+                actionBar.Display();
+
+                // Action Text - Info passed through action bar
+                // Console.WriteLine("Possible Moves: " + new string(possibleMoves));
 
                 char input = parser.ReadAction(possibleMoves); // necessary side effect - prints "Invalid Action" if invalid and asks again
 
