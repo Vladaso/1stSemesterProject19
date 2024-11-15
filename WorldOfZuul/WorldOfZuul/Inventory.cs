@@ -26,41 +26,32 @@ public class Inventory{
 
     }
     
-    public void ShowInventory(){
+ 
+public void ShowInventory()
+{
+    int width = 88; 
 
-        if (items.Count == 0){
-            Console.WriteLine("Inventory is empty!");
-        
-        }
+    Console.WriteLine("    ┌" + new string('─', width - 4) + "┐");
 
-        else{
-            Console.WriteLine("Your inventory contains:");
-            foreach(var item in items){
-                Console.WriteLine("- " + item);
+    Console.WriteLine("    │" + " Inventory:".PadRight(width - 4) + "│");
 
-            }
-
-
+    if (items.Count == 0)
+    {
+        Console.WriteLine("    │" + " Inventory is empty!".PadRight(width - 4) + "│");
+    }
+    else
+    {
+        foreach (var item in items)
+        {
+            Console.WriteLine("    │" + (" - " + item).PadRight(width - 4) + "│");
         }
     }
 
-
-        
-
+    Console.Write("    └" + new string('─', width - 4) + "┘");
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
+}
 
 
 }
