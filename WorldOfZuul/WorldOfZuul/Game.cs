@@ -71,9 +71,16 @@ namespace WorldOfZuul
                 Console.WriteLine("\x1b[3J");
                 Console.Clear();
 
+
+
                 //Place for Screen Drawing
                 Console.WriteLine(rooms[player.Position].RoomName);
-                Console.WriteLine(roomArt.Rooms[player.Position]); // Temporary for Now
+
+                // Inventory
+                Inventory inventory = new Inventory();
+                inventory.ShowInventory();
+
+                Console.Write(roomArt.Rooms[player.Position]); // Temporary for Now
 
                 char[] possibleMoves = GetPossibleMoves();
                 string[] directions = possibleMoves.Select(CharToDirection).ToArray();
