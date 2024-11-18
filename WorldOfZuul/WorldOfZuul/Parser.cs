@@ -15,8 +15,12 @@ namespace WorldOfZuul
             // A very nice way to check if a key is in an array
             while(!Array.Exists(possibleMoves, element => element == return_key))
             {
+                if (key.Key == ConsoleKey.Escape)
+                {
+                    return 'q';
+                }
                 actionBar = new ActionBar();
-                actionBar.PrintMessage("| Invalid Action |", [35, 24]);
+                actionBar.PrintMessage("| Invalid Action |", [35, 27]);
                 // Console.WriteLine("Invalid Action"); //Redudntant this action is performed thought the ActionBar.
                 key = Console.ReadKey(intercept: true);
                 return_key = key.KeyChar;

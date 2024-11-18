@@ -14,24 +14,43 @@ namespace WorldOfZuul
         /// </summary>
         // public List<Action> Actions { get; private set; }
         public List<Action> Actions { get; private set; }
-        public char[] PossibleMoves { get; private set; }
+        public string[] PossibleMoves { get; private set; }
         
         /// <summary>
         /// Represents a string that contains the UI implementation of the Action Bar.
         /// </summary>
         public string ActionBarArt = @"
-    ┌                                                                                    ┐
+    ┌                                                              [PRESS ESC TO EXIT]   ┐
     │ > Where do you want to go?                                                 [map]   │
     │                                                                                    │
     │                                                                                  > │
     │                                                                                    │
     └────────────────────────────────────────────────────────────────────────────────────┘
-        ";
+    ";
         public string ActionFrame { get; private set; } = @"
 ┌───┐
-│ . │
+│ ► │
 └───┘
 ";
+
+        public string[] ActionButtons = new string[] {
+    @"
+┌───┐
+│ ◄ │
+└───┘",
+    @"
+┌───┐
+│ ▼ │
+└───┘",
+    @"
+┌───┐ 
+│ ► │ 
+└───┘",
+    @"
+┌───┐
+│ ▲ │
+└───┘"
+        };
 
 
 
@@ -48,7 +67,7 @@ namespace WorldOfZuul
             Console.WriteLine("ActionBar created. Actions added.");
         }
 
-        public ActionBar(char[] possibleMoves)
+        public ActionBar(string[] possibleMoves)
         {
             PossibleMoves = (possibleMoves != null) ? possibleMoves : throw new ArgumentNullException(nameof(possibleMoves));
             // Console.WriteLine("ActionBar created, Possible Moves added.");
@@ -63,21 +82,21 @@ namespace WorldOfZuul
         /// </summary>
         public void Display()
         {
-            int barCol = 22;
-            PlaceItem(ActionBarArt, 0, barCol);
+            int barRow = 25;
+            PlaceItem(ActionBarArt, 0, barRow);
             // Console.WriteLine(ActionBarArt);
-            int col = barCol + 2;
-            int row = 7;
+            int row = barRow + 2;
+            int col = 7;
 
-            foreach (char action in PossibleMoves)
+            foreach (string action in PossibleMoves)
             {
                 // PLaces the possible moves with frame, issue with horizontal move
                 // string actionFrame = UpdateActionFrame(9, action);
-                // PlaceItem(actionFrame, row , col );
+                // PlaceItem(actionFrame, col , row );
 
                 // Places the possible moves
-                PlaceItem(Convert.ToString(action), row , col + 2 );
-                row += 6;
+                PlaceItem(Convert.ToString(action), col , row + 2 );
+                col += 6;
             }
         }
 
@@ -111,6 +130,7 @@ namespace WorldOfZuul
             // PLace item in desired position and restore to old postion
             Console.SetCursorPosition(row, col);
             Console.Write(item);
+            // (left, top) = Console.GetCursorPosition();
             Console.SetCursorPosition(left, top);
 
         }

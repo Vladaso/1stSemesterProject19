@@ -1,4 +1,6 @@
-﻿namespace WorldOfZuul
+﻿using System.Linq;
+
+namespace WorldOfZuul
 {
 
     public class Game
@@ -74,25 +76,28 @@
                 Console.WriteLine(roomArt.Rooms[player.Position]); // Temporary for Now
 
                 char[] possibleMoves = GetPossibleMoves();
+                string[] directions = possibleMoves.Select(CharToDirection).ToArray();
 
                 // Action Bar
-                ActionBar actionBar = new ActionBar(possibleMoves);
+                ActionBar actionBar = new ActionBar(directions);
                 actionBar.Display();
 
-                // Action Text - Info passed through action bar
-                // Console.WriteLine("Possible Moves: " + new string(possibleMoves));
-
+                
                 char input = parser.ReadAction(possibleMoves); // necessary side effect - prints "Invalid Action" if invalid and asks again
-
-                MovePlayer(CharToDirection(input));
+                if (input == 'q')
+                {
+                    continuePlaying = TerminateGame();
+                    continue;
+                } else
+                {
+                    MovePlayer(CharToDirection(input));
+                }
 
                 // Action? action = parser.GetAction(input);
 
                 // action.Execute();
-
             }
 
-            Console.WriteLine("Thank you for playing World of Zuul!");
         }
 
         private char DirectionToChar(string direction){
@@ -140,6 +145,14 @@
                     return;
                 }
             }
+        }
+
+        private bool TerminateGame(){
+            Console.Clear();
+            Console.WriteLine("                              . ");
+            Console.WriteLine("Thank you for playing  ><(((º> ");
+            Console.WriteLine();
+            return false;
         }
 
     }
