@@ -68,12 +68,17 @@ namespace WorldOfZuul
             {
                 // Has to be done like this to clear the WHOLE console
                 Console.Clear();
-                Console.WriteLine("\x1b[3J");
+                Console.WriteLine("\x1b[3J"); //== Console.Clear();
                 Console.Clear();
 
+                PollutionMeter pollutionMeter = new PollutionMeter();
+
+                
                 //Place for Screen Drawing
                 Console.WriteLine(rooms[player.Position].RoomName);
                 Console.WriteLine(roomArt.Rooms[player.Position]); // Temporary for Now
+
+                // Player player1= new Player(40, 7, pollutionMeter);
 
                 char[] possibleMoves = GetPossibleMoves();
                 string[] directions = possibleMoves.Select(CharToDirection).ToArray();
@@ -90,6 +95,8 @@ namespace WorldOfZuul
                     continue;
                 } else
                 {
+                    pollutionMeter.Draw();
+                    // player.Move(keyInfo);
                     MovePlayer(CharToDirection(input));
                 }
 
@@ -152,6 +159,16 @@ namespace WorldOfZuul
             Console.WriteLine("                              . ");
             Console.WriteLine("Thank you for playing  ><(((º> ");
             Console.WriteLine();
+            Console.CursorVisible = true;
+            return false;
+        }
+        
+        private bool GameOver(){
+            Console.Clear();
+            Console.WriteLine("                 . ");
+            Console.WriteLine("Game over  ><(((º> ");
+            Console.WriteLine();
+            Console.CursorVisible = true;
             return false;
         }
 

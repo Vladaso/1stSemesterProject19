@@ -82,7 +82,7 @@ namespace WorldOfZuul
         /// </summary>
         public void Display()
         {
-            int barRow = 25;
+            int barRow = 26;
             PlaceItem(ActionBarArt, 0, barRow);
             // Console.WriteLine(ActionBarArt);
             int row = barRow + 2;
