@@ -10,11 +10,14 @@ namespace WorldOfZuul
         private RoomArt roomArt;
         private Parser parser = new Parser();
         private Player player = new Player();
+        private Action action;
+
         public Game()
         {
             roomArt = new RoomArt();
             rooms = new List<Room>();
             edges = new List<Edge>();
+            action = new Action(edges, player);
             CreateRooms();
             CreateEdges();
         }
@@ -96,7 +99,7 @@ namespace WorldOfZuul
                     continue;
                 } else
                 {
-                    MovePlayer(CharToDirection(input));
+                    action.MovePlayer(CharToDirection(input));
                 }
 
                 // Action? action = parser.GetAction(input);
