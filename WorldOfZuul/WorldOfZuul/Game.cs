@@ -6,18 +6,20 @@ namespace WorldOfZuul
     public class Game
     {
         private List<Room> rooms;
-        private List<Edge> edges;
+        public List<Edge> edges { get; private set; }
         private RoomArt roomArt;
         private Parser parser = new Parser();
-        private Player player = new Player();
+        public Player player { get; private set; } = new Player();
         private Action action;
+
+        public Boolean continuePlaying = true;
 
         public Game()
         {
             roomArt = new RoomArt();
             rooms = new List<Room>();
             edges = new List<Edge>();
-            action = new Action(edges, player);
+            action = new Action(game: this); // So Action can encapsulate the game logic
             CreateRooms();
             CreateEdges();
         }
@@ -54,10 +56,10 @@ namespace WorldOfZuul
             foreach (Edge edge in edges)
             {
                 if(edge.con1start == player.Position){
-                    possibleMoves.Add(DirectionToChar(edge.direction1));
+                    possibleMoves.Add(Utils.DirectionToChar(edge.direction1));
                 }
                 else if(edge.con2start == player.Position){
-                    possibleMoves.Add(DirectionToChar(edge.direction2));
+                    possibleMoves.Add(Utils.DirectionToChar(edge.direction2));
                 }
             }
             possibleMoves.Add('q');
@@ -67,99 +69,25 @@ namespace WorldOfZuul
 
         public void Play()
         {
-            bool continuePlaying = true;
             //One time screen initialization
             Screen screen = new Screen(37, 90); //Height, Width
+            Inventory inventory = new Inventory();
+
             while (continuePlaying)
             {
                 ConsoleUtils.ClearConsole();
 
-                // Inventory
-                Inventory inventory = new Inventory();
-
                 char[] possibleMoves = GetPossibleMoves();
-                string[] directions = possibleMoves.Select(CharToDirection).ToArray();
-                //Adds the command for the player to the directions
-                for(int i = 0; i < directions.Length; i++){
-                    directions[i] = directions[i] + "(" +possibleMoves[i] + ")";
-                }
 
-                // Action Bar
-                ActionBar actionBar = new ActionBar(directions);
+                ActionBar actionBar = new ActionBar(possibleMoves);
 
                 screen.SetScreenContent(rooms[player.Position].RoomName, inventory.ShowInventory(), roomArt.Rooms[player.Position], actionBar.ToString());
                 screen.Display();
 
                 char input = parser.ReadAction(possibleMoves);
-                if (input == 'q')
-                {
-                    continuePlaying = TerminateGame();
-                    continue;
-                } else
-                {
-                    action.MovePlayer(CharToDirection(input));
-                }
 
-                // Action? action = parser.GetAction(input);
-
-                // action.Execute();
+                action.Execute(input);
             }
-
-        }
-
-        private char DirectionToChar(string direction){
-            if (direction == "north"){
-                return 'w';
-            }
-            else if (direction == "south"){
-                return 's';
-            }
-            else if (direction == "east"){
-                return 'd';
-            }
-            else if (direction == "west"){
-                return 'a';
-            }
-            else{
-                throw new Exception("Invalid direction");
-            }
-        }
-        private string CharToDirection(char direction){
-            if (direction == 'w'){
-                return "north";
-            }
-            else if (direction == 's'){
-                return "south";
-            }
-            else if (direction == 'd'){
-                return "east";
-            }
-            else if (direction == 'a'){
-                return "west";
-            }
-            else{
-                return new string(direction, 1);
-            }
-        }
-        private void MovePlayer(string direction){
-            foreach (Edge edge in edges){
-                if(edge.con1start == player.Position&& edge.direction1 == direction){
-                    player.Position = edge.con1end;
-                    return;
-                }
-                else if(edge.con2start == player.Position && edge.direction2 == direction){
-                    player.Position = edge.con2end;
-                    return;
-                }
-            }
-        }
-
-        private bool TerminateGame(){
-            Console.Clear();
-            Console.WriteLine("                              . ");
-            Console.WriteLine("Thank you for playing  ><(((º> ");
-            Console.WriteLine();
-            return false;
         }
 
     }

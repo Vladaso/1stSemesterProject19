@@ -23,9 +23,14 @@ namespace WorldOfZuul
         /// Initializes a new instance of the <see cref="ActionBar"/> class with possible moves.
         /// </summary>
         /// <param name="possibleMoves">The list of possible moves.</param>
-        public ActionBar(string[] possibleMoves)
+        public ActionBar(char[] possibleMoves)
         {
-            PossibleMoves = possibleMoves ?? throw new ArgumentNullException(nameof(possibleMoves));
+            string[] directions = possibleMoves.Select(Utils.CharToDirection).ToArray();
+            //Adds the command for the player to the directions
+            for(int i = 0; i < directions.Length; i++){
+                directions[i] = directions[i] + "(" +possibleMoves[i] + ")";
+            }
+            PossibleMoves = directions ?? throw new ArgumentNullException(nameof(directions));
         }
 
         /// <summary>
