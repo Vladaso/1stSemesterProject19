@@ -10,7 +10,7 @@ namespace WorldOfZuul {
             CorrectAnswer = correctAnswer;
         }
 
-        public bool CheckAnswer(string answer) {
+        public bool CheckAnswer(string? answer) {
             int choiceIndex;
             if (int.TryParse(answer, out choiceIndex) && choiceIndex > 0 && choiceIndex <= Choices.Count) {
                 return Choices[choiceIndex - 1].Equals(CorrectAnswer, StringComparison.OrdinalIgnoreCase);

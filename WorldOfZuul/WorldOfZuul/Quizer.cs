@@ -100,7 +100,7 @@ namespace WorldOfZuul {
             Question question = GetRandomQuestion();
             Console.WriteLine(question.DisplayQuestion());
             Console.Write("Enter your answer (number): ");
-            string answer = Console.ReadLine();
+            string? answer = Console.ReadLine();
 
             if (question.CheckAnswer(answer)) {
                 Console.WriteLine("Correct!");
