@@ -66,12 +66,7 @@ namespace WorldOfZuul
             bool continuePlaying = true;
             while (continuePlaying)
             {
-                // Has to be done like this to clear the WHOLE console
-                Console.Clear();
-                Console.WriteLine("\x1b[3J");
-                Console.Clear();
-
-
+                ConsoleUtils.ClearConsole();
 
                 //Place for Screen Drawing
                 Console.WriteLine(rooms[player.Position].RoomName);
@@ -84,10 +79,14 @@ namespace WorldOfZuul
 
                 char[] possibleMoves = GetPossibleMoves();
                 string[] directions = possibleMoves.Select(CharToDirection).ToArray();
+                //Adds the command for the player to the directions
+                for(int i = 0; i < directions.Length; i++){
+                    directions[i] = directions[i] + "(" +possibleMoves[i] + ")";
+                }
 
                 // Action Bar
                 ActionBar actionBar = new ActionBar(directions);
-                actionBar.Display();
+                Console.Write(actionBar.ToString());
 
                 
                 char input = parser.ReadAction(possibleMoves); // necessary side effect - prints "Invalid Action" if invalid and asks again

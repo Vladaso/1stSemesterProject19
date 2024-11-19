@@ -1,6 +1,5 @@
-using System.Drawing;
-using System.Runtime.CompilerServices;
-using System.Security;
+using System;
+using System.Collections.Generic;
 
 namespace WorldOfZuul
 {
@@ -9,150 +8,71 @@ namespace WorldOfZuul
     /// </summary>
     public class ActionBar
     {
-        /// <summary>
-        /// Represents a list of actions.
-        /// </summary>
-        // public List<Action> Actions { get; private set; }
-        public List<Action> Actions { get; private set; }
         public string[] PossibleMoves { get; private set; }
-        
-        /// <summary>
-        /// Represents a string that contains the UI implementation of the Action Bar.
-        /// </summary>
-        public string ActionBarArt = @"
-    ┌                                                              [PRESS ESC TO EXIT]   ┐
+
+        private readonly string ActionBarArt = @"
+    ┌                                                                                    ┐
     │ > Where do you want to go?                                                 [map]   │
     │                                                                                    │
-    │                                                                                  > │
+    │                                                                                    │
     │                                                                                    │
     └────────────────────────────────────────────────────────────────────────────────────┘
     ";
-        public string ActionFrame { get; private set; } = @"
-┌───┐
-│ ► │
-└───┘
-";
-
-        public string[] ActionButtons = new string[] {
-    @"
-┌───┐
-│ ◄ │
-└───┘",
-    @"
-┌───┐
-│ ▼ │
-└───┘",
-    @"
-┌───┐ 
-│ ► │ 
-└───┘",
-    @"
-┌───┐
-│ ▲ │
-└───┘"
-        };
-
-
 
         /// <summary>
-        /// Initialize a new instance of the <see cref="ActionBar"/> class.
+        /// Initializes a new instance of the <see cref="ActionBar"/> class with possible moves.
         /// </summary>
-        /// <param name="actions">The list of actions.</param>
-        /// <param name="actionBarArt">The action bar artwork.</param>
-        /// <exception cref="ArgumentNullException">Thrown when actions or actionBarArt is null.</exception>
-        public ActionBar(List<Action> actions)
-        {
-            Actions = (actions != null) ? actions : throw new ArgumentNullException(nameof(actions));
-            // ActionBarArt = (actionBarArt != null) ? actionBarArt : throw new ArgumentNullException(nameof(ActionBarArt));
-            Console.WriteLine("ActionBar created. Actions added.");
-        }
-
+        /// <param name="possibleMoves">The list of possible moves.</param>
         public ActionBar(string[] possibleMoves)
         {
-            PossibleMoves = (possibleMoves != null) ? possibleMoves : throw new ArgumentNullException(nameof(possibleMoves));
-            // Console.WriteLine("ActionBar created, Possible Moves added.");
-        }
-
-        public ActionBar()
-        {
+            PossibleMoves = possibleMoves ?? throw new ArgumentNullException(nameof(possibleMoves));
         }
 
         /// <summary>
-        /// Display the action bar.
+        /// Builds the full action bar display as a string.
         /// </summary>
-        public void Display()
+private string BuildDisplay()
+{
+    var display = new List<string>(ActionBarArt.Split('\n'));
+    const int barWidth = 88;
+    const int padding = 4;
+    int contentWidth = barWidth - (padding); // there is padding only on one side
+
+    string movesLine = new string("");
+    if (PossibleMoves.Length > 0)
+    {
+        int spaceBetween = PossibleMoves.Length > 1
+            ? (contentWidth - PossibleMoves.Length * 10) / (PossibleMoves.Length - 1)
+            : 0;
+
+        for (int i = 0; i < PossibleMoves.Length; i++)
         {
-            int barRow = 25;
-            PlaceItem(ActionBarArt, 0, barRow);
-            // Console.WriteLine(ActionBarArt);
-            int row = barRow + 2;
-            int col = 7;
-
-            foreach (string action in PossibleMoves)
+            movesLine += PossibleMoves[i].PadRight(10);
+            if (i < PossibleMoves.Length - 1)
             {
-                // PLaces the possible moves with frame, issue with horizontal move
-                // string actionFrame = UpdateActionFrame(9, action);
-                // PlaceItem(actionFrame, col , row );
-
-                // Places the possible moves
-                PlaceItem(Convert.ToString(action), col , row + 2 );
-                col += 6;
+                movesLine += new string(' ', spaceBetween);
             }
         }
-
-        /// <summary>
-        /// Updates the state of the player object in the game.
-        /// </summary>
-        /// <param name="player">The player object.</param>
-        private void UpdateState(Player player)
-        {
-            // Updates state based on player object
-        }
-
-        /// <summary>
-        /// Print given message when in Action Bar
-        /// </summary>
-        public void PrintMessage( string message, int[] position)
-        {
-            PlaceItem(message, position[0], position[1]);
-            // Prints message that Input is invalid
-        }
-
-        /// <summary>
-        /// Place given item into given postion on the Terminal
-        /// </summary>
-        /// <param name="item">The item.</param>
-        private void PlaceItem(string item, int row, int col)
-        {
-            // Save current position
-            (int left, int top) = Console.GetCursorPosition();
-
-            // PLace item in desired position and restore to old postion
-            Console.SetCursorPosition(row, col);
-            Console.Write(item);
-            // (left, top) = Console.GetCursorPosition();
-            Console.SetCursorPosition(left, top);
-
-        }
-
-        /// <summary>
-        /// Update the Action frame with a given character.
-        /// </summary>
-        /// <param name="index">The postion where the character will be placed.</param>
-        /// <param name="newChar">The character to be placed.</param>
-            private string UpdateActionFrame(int index, char newChar)
-            {
-                if (index < 0 || index >= ActionFrame.Length)
-                {
-                    throw new ArgumentOutOfRangeException(nameof(index), "Index is out of range.");
-                }
-
-                char[] chars = ActionFrame.ToCharArray();
-                chars[index] = newChar;
-
-                ActionFrame = new string(chars);
-                return ActionFrame;
     }
+    movesLine = movesLine.PadRight(barWidth-padding);
 
+    int movesRowIndex = 3;
+    if (movesRowIndex < display.Count - 2)
+    {
+        display[movesRowIndex] = $"{new string(' ', padding)}│{movesLine}│";
+    }
+    return string.Join(Environment.NewLine, display);
+}
+
+
+
+        /// <summary>
+        /// Returns the string representation of the action bar.
+        /// </summary>
+        /// <returns>The action bar as a formatted string.</returns>
+        public override string ToString()
+        {
+            return BuildDisplay();
+        }
     }
 }

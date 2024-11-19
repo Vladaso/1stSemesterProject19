@@ -5,7 +5,6 @@ namespace WorldOfZuul
 {
     public class Parser
     {
-        private ActionBar actionBar;
         public char ReadAction(char[] possibleMoves)
         {
 
@@ -19,8 +18,6 @@ namespace WorldOfZuul
                 {
                     return 'q';
                 }
-                actionBar = new ActionBar();
-                actionBar.PrintMessage("| Invalid Action |", [35, 27]);
                 // Console.WriteLine("Invalid Action"); //Redudntant this action is performed thought the ActionBar.
                 key = Console.ReadKey(intercept: true);
                 return_key = key.KeyChar;
