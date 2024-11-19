@@ -7,6 +7,7 @@ namespace WorldOfZuul
     {
         private List<Room> rooms;
         public List<Edge> edges { get; private set; }
+        public List<Item> items { get; private set; }
         private RoomArt roomArt;
         private Parser parser = new Parser();
         public Player player { get; private set; } = new Player();
@@ -19,9 +20,11 @@ namespace WorldOfZuul
             roomArt = new RoomArt();
             rooms = new List<Room>();
             edges = new List<Edge>();
+            items = new List<Item>();
             action = new Action(game: this); // So Action can encapsulate the game logic
             CreateRooms();
             CreateEdges();
+            CreateItems();
         }
 
         private void CreateRooms()
@@ -49,6 +52,14 @@ namespace WorldOfZuul
             edges.Add(new Edge(5, 6, "west"));
             edges.Add(new Edge(5, 7, "east"));
 
+        }
+
+        private void CreateItems(){
+            items.Add(new Item(name:"Bubbles", description:"Frail bubbles stuck together.", x: 15, y: 10, roomNumber: 0, symbol: "🫧"));
+            items.Add(new Item(name:"Key", description:"Hmm I wonder what this opens?", x: 15, y: 15, roomNumber: 1, symbol: "🔑"));
+            items.Add(new Item(name:"Hamburger", description:"Mhmm burger.", x: 15, y: 15, roomNumber: 2, symbol: "🍔"));
+            items.Add(new Item(name:"Balloon", description:"How come it doesn't pop?", x: 15, y: 15, roomNumber: 3, symbol: "🎈"));
+            items.Add(new Item(name:"Guitar", description:"If only I could play", x: 15, y: 15, roomNumber: 4, symbol: "🎸"));
         }
 
         private char[] GetPossibleMoves(){
@@ -81,7 +92,12 @@ namespace WorldOfZuul
 
                 ActionBar actionBar = new ActionBar(possibleMoves);
 
-                screen.SetScreenContent(rooms[player.Position].RoomName, inventory.ShowInventory(), roomArt.Rooms[player.Position], actionBar.ToString());
+                screen.SetScreenContent(rooms[player.Position].RoomName,
+                inventory.ShowInventory(), 
+                roomArt.Rooms[player.Position],
+                actionBar.ToString(), 
+                items.Where(item => item.RoomNumber == player.Position).ToList().FirstOrDefault());
+
                 screen.Display();
 
                 char input = parser.ReadAction(possibleMoves);
