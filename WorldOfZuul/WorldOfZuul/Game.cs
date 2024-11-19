@@ -83,6 +83,8 @@ namespace WorldOfZuul
             //One time screen initialization
             Screen screen = new Screen(37, 90); //Height, Width
             Inventory inventory = new Inventory();
+            PollutionMeter pollutionMeter = new PollutionMeter();
+            Quizer quizer = new Quizer();
 
             while (continuePlaying)
             {
@@ -99,10 +101,14 @@ namespace WorldOfZuul
                 items.Where(item => item.RoomNumber == player.Position).ToList().FirstOrDefault());
 
                 screen.Display();
+                pollutionMeter.Draw();
 
                 char input = parser.ReadAction(possibleMoves);
 
                 action.Execute(input);
+                if(pollutionMeter.IncreasePollution()){
+                    quizer.AskQuestion();
+                }
             }
         }
 
