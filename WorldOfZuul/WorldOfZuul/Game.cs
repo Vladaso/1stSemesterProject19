@@ -60,25 +60,22 @@ namespace WorldOfZuul
                     possibleMoves.Add(DirectionToChar(edge.direction2));
                 }
             }
+            possibleMoves.Add('q');
             return possibleMoves.ToArray();
-            // Sohuld be extended to item actions
+            // Should be extended to item actions
         }
 
         public void Play()
         {
             bool continuePlaying = true;
+            //One time screen initialization
+            Screen screen = new Screen(37, 90); //Height, Width
             while (continuePlaying)
             {
                 ConsoleUtils.ClearConsole();
 
-                //Place for Screen Drawing
-                Console.WriteLine(rooms[player.Position].RoomName);
-
                 // Inventory
                 Inventory inventory = new Inventory();
-                inventory.ShowInventory();
-
-                Console.Write(roomArt.Rooms[player.Position]); // Temporary for Now
 
                 char[] possibleMoves = GetPossibleMoves();
                 string[] directions = possibleMoves.Select(CharToDirection).ToArray();
@@ -89,10 +86,11 @@ namespace WorldOfZuul
 
                 // Action Bar
                 ActionBar actionBar = new ActionBar(directions);
-                Console.Write(actionBar.ToString());
 
-                
-                char input = parser.ReadAction(possibleMoves); // necessary side effect - prints "Invalid Action" if invalid and asks again
+                screen.SetScreenContent(rooms[player.Position].RoomName, inventory.ShowInventory(), roomArt.Rooms[player.Position], actionBar.ToString());
+                screen.Display();
+
+                char input = parser.ReadAction(possibleMoves);
                 if (input == 'q')
                 {
                     continuePlaying = TerminateGame();
@@ -140,7 +138,7 @@ namespace WorldOfZuul
                 return "west";
             }
             else{
-                throw new Exception("Invalid direction");
+                return new string(direction, 1);
             }
         }
         private void MovePlayer(string direction){
