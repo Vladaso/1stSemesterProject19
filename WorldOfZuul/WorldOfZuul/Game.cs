@@ -29,6 +29,8 @@
             rooms.Add(new Room(7, "Pyramid room", "Placeholder"));
             rooms.Add(new Room(8, "Bag Room", "Placeholder"));
             rooms.Add(new Room(9, "Maze room", "Placeholder"));
+
+        
         }
 
         private void CreateEdges(){
