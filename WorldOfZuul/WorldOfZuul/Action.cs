@@ -15,6 +15,17 @@ namespace WorldOfZuul
             else if(command == 'q'){
                 TerminateGame();
             }
+            else if(command == 't'){
+                game.npcs.Where(npc => npc.RoomNumber == game.player.Position).ToList().FirstOrDefault()!.StartDialogue(game);
+            }
+            else if(command == 'p'){
+                Item p = game.items.Where(item => item.RoomNumber == game.player.Position).ToList().FirstOrDefault()!;
+                game.inventory.AddItem(p); //Ignore warning is never null if p is a possible move
+                game.items.Remove(p);
+            }
+            else{
+                throw new System.Exception("Invalid command");
+            }
         }
 
         //Overloaded for easier calls

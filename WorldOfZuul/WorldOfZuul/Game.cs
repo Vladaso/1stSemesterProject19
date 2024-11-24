@@ -12,6 +12,10 @@ namespace WorldOfZuul
         private Parser parser = new Parser();
         public Player player { get; private set; } = new Player();
         private Action action;
+        public List<NPC> npcs;
+        public Inventory inventory = new Inventory();
+        //One time screen initialization
+        public Screen screen = new Screen(37, 90); //Height, Width
 
         public Boolean continuePlaying = true;
 
@@ -21,10 +25,12 @@ namespace WorldOfZuul
             rooms = new List<Room>();
             edges = new List<Edge>();
             items = new List<Item>();
+            npcs = new List<NPC>();
             action = new Action(game: this); // So Action can encapsulate the game logic
             CreateRooms();
             CreateEdges();
             CreateItems();
+            InitializeNPCs();
         }
 
         private void CreateRooms()
@@ -55,11 +61,13 @@ namespace WorldOfZuul
         }
 
         private void CreateItems(){
-            items.Add(new Item(name:"Bubbles", description:"Frail bubbles stuck together.", x: 15, y: 10, roomNumber: 0, symbol: "🫧"));
-            items.Add(new Item(name:"Key", description:"Hmm I wonder what this opens?", x: 15, y: 15, roomNumber: 1, symbol: "🔑"));
-            items.Add(new Item(name:"Hamburger", description:"Mhmm burger.", x: 15, y: 15, roomNumber: 2, symbol: "🍔"));
-            items.Add(new Item(name:"Balloon", description:"How come it doesn't pop?", x: 15, y: 15, roomNumber: 3, symbol: "🎈"));
-            items.Add(new Item(name:"Guitar", description:"If only I could play", x: 15, y: 15, roomNumber: 4, symbol: "🎸"));
+            items.Add(new Item(name:"Hamburger", description:"Mhmm burger.", x: 15, y: 15, roomNumber: 9, symbol: "🍔"));
+        }
+
+        private void InitializeNPCs()
+        {
+            npcs.Add(new NPC("Whale", 2));
+            npcs.Add(new NPC("Octopus", 3));
         }
 
         private char[] GetPossibleMoves(){
@@ -74,15 +82,17 @@ namespace WorldOfZuul
                 }
             }
             possibleMoves.Add('q');
+            if(items.Where(item => item.RoomNumber == player.Position).ToList().FirstOrDefault() != null){
+                possibleMoves.Add('p');
+            }
+            if(npcs.Where(npc => npc.RoomNumber == player.Position).ToList().FirstOrDefault() != null){
+                possibleMoves.Add('t');
+            }
             return possibleMoves.ToArray();
-            // Should be extended to item actions
         }
 
         public void Play()
         {
-            //One time screen initialization
-            Screen screen = new Screen(37, 90); //Height, Width
-            Inventory inventory = new Inventory();
             PollutionMeter pollutionMeter = new PollutionMeter();
             Quizer quizer = new Quizer();
 
@@ -98,7 +108,7 @@ namespace WorldOfZuul
                 inventory.ShowInventory(), 
                 roomArt.Rooms[player.Position],
                 actionBar.ToString(), 
-                items.Where(item => item.RoomNumber == player.Position).ToList().FirstOrDefault());
+                items.Where(item => item.RoomNumber == player.Position).ToList());
 
                 screen.Display();
                 pollutionMeter.Draw();

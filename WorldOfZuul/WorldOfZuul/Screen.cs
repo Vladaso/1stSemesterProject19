@@ -35,7 +35,7 @@ namespace WorldOfZuul
         /// <summary>
         /// Main method to set the content of the screen.
         /// </summary>
-        public void SetScreenContent(string title, string inventory, string roomArt, string actionBar, Item? item)
+        public void SetScreenContent(string title, string inventory, string roomArt, string actionBar, List<Item> items)
         {
             ClearScreen();
             //Have precise control over where the content is placed
@@ -49,8 +49,11 @@ namespace WorldOfZuul
             SetContentAtPosition(inventory, 0, 0);
             SetContentAtPosition(actionBar, 29, 0);
 
-            if(item != null){
-                SetContentAtPosition(item.Symbol, roomStart + item.Y, 4 + item.X);
+            if(items.Count > 0){
+                foreach (Item item in items)
+                {
+                    SetContentAtPosition(item.Symbol, roomStart + item.Y, 4 + item.X);
+                }
             }
         }
         private void SetContentAtPosition(string content, int startY, int startX)

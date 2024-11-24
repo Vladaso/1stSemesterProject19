@@ -6,32 +6,19 @@ using System.Text;
 namespace WorldOfZuul{
 
 public class Inventory{
-    private List<string> items;
+    public List<Item> items { get; private set; }
 
     public Inventory()
     {
-        items = new List<string>();
+        items = new List<Item>();
     }
 
-    public void AddItem(string item)
+    public void AddItem(Item item)
     {
         items.Add(item);
-        Console.WriteLine($"{item} added to your inventory.");
+        Console.WriteLine($"{item.Symbol} added to your inventory.");
     }
 
-    public void RemoveItem(string item)
-    {
-        if(items.Contains(item)){
-            items.Remove(item);
-            Console.WriteLine($"{item} removed from inventory.");
-        }
-        else{
-            Console.WriteLine($"{item} is not in inventory.");
-        }
-
-    }
-    
- 
         public string ShowInventory()
         {
             int width = 88;
@@ -54,7 +41,7 @@ public class Inventory{
                 int linesToShow = Math.Min(items.Count, maxLines - 3); // Reserve 3 lines for header, footer, and possible "more items" line
                 for (int i = 0; i < linesToShow; i++)
                 {
-                    sb.AppendLine("    │" + (" - " + items[i]).PadRight(width - 4) + "│");
+                    sb.AppendLine("    │" + (" - " + items[i].Symbol).PadRight(width - 4) + "│");
                 }
 
                 if (items.Count > linesToShow)
@@ -62,7 +49,6 @@ public class Inventory{
                     sb.AppendLine("    │" + (" ... and more items").PadRight(width - 4) + "│");
                 }
 
-                // Add padding lines if necessary
                 int paddingLines = maxLines - 3 - linesToShow - (items.Count > linesToShow ? 1 : 0);
                 for (int i = 0; i < paddingLines; i++)
                 {
