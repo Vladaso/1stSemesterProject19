@@ -5,10 +5,13 @@ namespace WorldOfZuul
     public class RoomArt
 {
     public List<string> Rooms { get; private set; }
+
+    public int RoomWidth { get; private set; } = 86;
+    public int RoomHeight { get; private set; } = 24;
     public RoomArt()
     {
         Rooms = new List<string>();
-        //Each room is 86x26 (actually 24 bu there are 2 new lines at the start and end)
+        //Each room is 86x26 (actually 24 but there are 2 new lines at the start and end)
 
         AddRoomArt(@"
     ┌────────────────────────────────────────────────────────────────────────────────────┐
@@ -126,7 +129,7 @@ namespace WorldOfZuul
     │   >('>   ┌──┘   ─────── │__=8                      +      +│ ───       ─── ──      │
     │          │ ───────────  │__\|,-                            │ ───────────── ──      │
     │   #,#    │ ── ┌──────┐  │,-`=--.                           └─────────────┐ ──      │
-    │    #o#  +│ ── │      │  │ / |\                             _            +│ ───     │
+    │    #o#  +│ ── │      │  │ / |\                                          +│ ───     │
     ├─────┐#   │ ─  │      └──┘   |                            ><_>            │ ───     │
     │ ─── │ +  │ ─  │          ~ +                             ┌───────┐       │ ───     │
     │ ─── │    │ ── │                                         ~│ ───── │       │ ─────── │

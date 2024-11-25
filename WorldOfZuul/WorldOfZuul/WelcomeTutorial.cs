@@ -31,9 +31,7 @@ namespace WorldOfZuul
 
         public static void ShowTutorial()
         {
-            Console.Clear();
-            Console.WriteLine("\x1b[J");
-            Console.Clear();
+            ConsoleUtils.ClearConsole();
             
             _displayAscii();
 
@@ -64,10 +62,7 @@ namespace WorldOfZuul
             Console.WriteLine("Press Enter to start the game!");
             Console.ReadLine();
 
-            Console.Clear();
-            Console.WriteLine("\x1b[J");
-            Console.Clear();
-
+            ConsoleUtils.ClearConsole();
 
         }
 
@@ -91,7 +86,7 @@ namespace WorldOfZuul
     {
         public static void ShowTutorial2()
         {
-            Console.Clear();
+            ConsoleUtils.ClearConsole();
             Console.WriteLine(@"                                                                                        
 ┌────────────────────────────────────────────────────────────────────────────────────┐
 │     o                                                                              │
@@ -118,8 +113,8 @@ namespace WorldOfZuul
 │  |___|                                                                             │
 └────────────────────────────────────────────────────────────────────────────────────┘
             ");
-            
-            WipeOut();
+            Console.ReadLine();
+            ConsoleUtils.ClearConsole();
 
             Console.WriteLine(@"                                                                                       
 ┌────────────────────────────────────────────────────────────────────────────────────┐
@@ -147,7 +142,8 @@ namespace WorldOfZuul
 │  |___|                                                                             │
 └────────────────────────────────────────────────────────────────────────────────────┘
             ");
-            WipeOut();
+            Console.ReadLine();
+            ConsoleUtils.ClearConsole();
 
             Console.WriteLine(@"                                                                                            
 ┌────────────────────────────────────────────────────────────────────────────────────┐
@@ -175,7 +171,8 @@ namespace WorldOfZuul
 │  |___|                                                                             │
 └────────────────────────────────────────────────────────────────────────────────────┘
             ");
-            WipeOut();
+            Console.ReadLine();
+            ConsoleUtils.ClearConsole();
 
 
             Console.WriteLine(@"                                                                                           
@@ -204,18 +201,10 @@ namespace WorldOfZuul
 │  |___|                                                                             │
 └────────────────────────────────────────────────────────────────────────────────────┘
 ");
-            WipeOut();
-
-            Game game = new Game();
-
-        }
-
-        private static void WipeOut()
-        {
             Console.ReadLine();
-            Console.Clear();
-            Console.WriteLine("\x1b[J");
-            Console.Clear();
+            ConsoleUtils.ClearConsole();
+
         }
+
     }
 }

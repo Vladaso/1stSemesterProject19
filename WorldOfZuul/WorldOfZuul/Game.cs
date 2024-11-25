@@ -1,20 +1,30 @@
-﻿namespace WorldOfZuul
+﻿using System.Linq;
+
+namespace WorldOfZuul
 {
 
     public class Game
     {
         private List<Room> rooms;
-        private List<Edge> edges;
+        public List<Edge> edges { get; private set; }
+        public List<Item> items { get; private set; }
         private RoomArt roomArt;
         private Parser parser = new Parser();
-        private Player player = new Player();
+        public Player player { get; private set; } = new Player();
+        private Action action;
+
+        public Boolean continuePlaying = true;
+
         public Game()
         {
             roomArt = new RoomArt();
             rooms = new List<Room>();
             edges = new List<Edge>();
+            items = new List<Item>();
+            action = new Action(game: this); // So Action can encapsulate the game logic
             CreateRooms();
             CreateEdges();
+            CreateItems();
         }
 
         private void CreateRooms()
@@ -46,109 +56,60 @@
 
         }
 
+        private void CreateItems(){
+            items.Add(new Item(name:"Bubbles", description:"Frail bubbles stuck together.", x: 15, y: 10, roomNumber: 0, symbol: "🫧"));
+            items.Add(new Item(name:"Key", description:"Hmm I wonder what this opens?", x: 15, y: 15, roomNumber: 1, symbol: "🔑"));
+            items.Add(new Item(name:"Hamburger", description:"Mhmm burger.", x: 15, y: 15, roomNumber: 2, symbol: "🍔"));
+            items.Add(new Item(name:"Balloon", description:"How come it doesn't pop?", x: 15, y: 15, roomNumber: 3, symbol: "🎈"));
+            items.Add(new Item(name:"Guitar", description:"If only I could play", x: 15, y: 15, roomNumber: 4, symbol: "🎸"));
+        }
+
         private char[] GetPossibleMoves(){
             List<char> possibleMoves = new List<char>();
             foreach (Edge edge in edges)
             {
                 if(edge.con1start == player.Position){
-                    possibleMoves.Add(DirectionToChar(edge.direction1));
+                    possibleMoves.Add(Utils.DirectionToChar(edge.direction1));
                 }
                 else if(edge.con2start == player.Position){
-                    possibleMoves.Add(DirectionToChar(edge.direction2));
+                    possibleMoves.Add(Utils.DirectionToChar(edge.direction2));
                 }
             }
+            possibleMoves.Add('q');
             return possibleMoves.ToArray();
-            // Sohuld be extended to item actions
+            // Should be extended to item actions
         }
 
         public void Play()
         {
-            bool continuePlaying = true;
+            //One time screen initialization
+            Screen screen = new Screen(37, 90); //Height, Width
+            Inventory inventory = new Inventory();
+            PollutionMeter pollutionMeter = new PollutionMeter();
+            Quizer quizer = new Quizer();
+
             while (continuePlaying)
             {
-                // Has to be done like this to clear the WHOLE console
-                Console.Clear();
-                Console.WriteLine("\x1b[3J");
-                Console.Clear();
-
-
-
-                //Place for Screen Drawing
-                Console.WriteLine(rooms[player.Position].RoomName);
-
-                // Inventory
-                Inventory inventory = new Inventory();
-                inventory.ShowInventory();
-
-                Console.Write(roomArt.Rooms[player.Position]); // Temporary for Now
+                ConsoleUtils.ClearConsole();
 
                 char[] possibleMoves = GetPossibleMoves();
 
-                // Action Bar
                 ActionBar actionBar = new ActionBar(possibleMoves);
-                actionBar.Display();
 
+                screen.SetScreenContent(rooms[player.Position].RoomName,
+                inventory.ShowInventory(), 
+                roomArt.Rooms[player.Position],
+                actionBar.ToString(), 
+                items.Where(item => item.RoomNumber == player.Position).ToList().FirstOrDefault());
 
+                screen.Display();
+                pollutionMeter.Draw();
 
-                // Action Text - Info passed through action bar
-                // Console.WriteLine("Possible Moves: " + new string(possibleMoves));
+                char input = parser.ReadAction(possibleMoves);
 
-                char input = parser.ReadAction(possibleMoves); // necessary side effect - prints "Invalid Action" if invalid and asks again
-
-                MovePlayer(CharToDirection(input));
-
-                // Action? action = parser.GetAction(input);
-
-                // action.Execute();
-
-            }
-
-            Console.WriteLine("Thank you for playing World of Zuul!");
-        }
-
-        private char DirectionToChar(string direction){
-            if (direction == "north"){
-                return 'w';
-            }
-            else if (direction == "south"){
-                return 's';
-            }
-            else if (direction == "east"){
-                return 'd';
-            }
-            else if (direction == "west"){
-                return 'a';
-            }
-            else{
-                throw new Exception("Invalid direction");
-            }
-        }
-        private string CharToDirection(char direction){
-            if (direction == 'w'){
-                return "north";
-            }
-            else if (direction == 's'){
-                return "south";
-            }
-            else if (direction == 'd'){
-                return "east";
-            }
-            else if (direction == 'a'){
-                return "west";
-            }
-            else{
-                throw new Exception("Invalid direction");
-            }
-        }
-        private void MovePlayer(string direction){
-            foreach (Edge edge in edges){
-                if(edge.con1start == player.Position&& edge.direction1 == direction){
-                    player.Position = edge.con1end;
-                    return;
-                }
-                else if(edge.con2start == player.Position && edge.direction2 == direction){
-                    player.Position = edge.con2end;
-                    return;
+                action.Execute(input);
+                if(pollutionMeter.IncreasePollution()){
+                    quizer.AskQuestion();
                 }
             }
         }

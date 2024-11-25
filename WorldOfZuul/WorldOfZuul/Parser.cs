@@ -5,7 +5,6 @@ namespace WorldOfZuul
 {
     public class Parser
     {
-        private ActionBar actionBar;
         public char ReadAction(char[] possibleMoves)
         {
 
@@ -15,8 +14,10 @@ namespace WorldOfZuul
             // A very nice way to check if a key is in an array
             while(!Array.Exists(possibleMoves, element => element == return_key))
             {
-                actionBar = new ActionBar();
-                actionBar.PrintMessage("| Invalid Action |", [35, 24]);
+                if (key.Key == ConsoleKey.Escape)
+                {
+                    return 'q';
+                }
                 // Console.WriteLine("Invalid Action"); //Redudntant this action is performed thought the ActionBar.
                 key = Console.ReadKey(intercept: true);
                 return_key = key.KeyChar;
