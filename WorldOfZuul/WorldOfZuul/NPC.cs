@@ -178,9 +178,9 @@ private void WhaleDialogue(Game game)
                 if (ratioAnswer == "40:1")
                 {
                     if(this.MissionStatus==0){
-                    Console.WriteLine("Hmph. You're right... It is 40:1. Terrible, isn't it?");
-                    Console.WriteLine("Well, since you actually know something, I'll tell you a secret: The orange Fintastic pearl has a special power.");
-                    Console.WriteLine("And here it is btw, it's all yours.");
+                    Console.WriteLine("\nHmph. You're right... It is 40:1. Terrible, isn't it?");
+                    Console.WriteLine("\nWell, since you actually know something, I'll tell you a secret: The orange Fintastic pearl has a special power.");
+                    Console.WriteLine("\nAnd here it is btw, it's all yours.");
                     game.items.Add(new Item(name:"Orange Pearl", description:"Fintastic Pearl", x: 15, y: 15, roomNumber: this.RoomNumber, symbol: "🟠"));
                     Console.WriteLine("Now go away, I'm tired.");
                         this.MissionStatus = 1;
@@ -191,9 +191,7 @@ private void WhaleDialogue(Game game)
                     GetPlayerChoice(1);
                     break;
                     }
-                    Console.WriteLine("\nHmph. You're right... It is 40:1. Terrible, isn't it?");
-                    Console.WriteLine("Well, since you actually know something, I'll tell you a secret: The orange Fintastic pearl has a special power.");
-                    Console.WriteLine("\n1. Thank you for the secret.");
+                    Console.WriteLine("\n1. Thank you.");
                     GetPlayerChoice(1);
                     break;
                 }
