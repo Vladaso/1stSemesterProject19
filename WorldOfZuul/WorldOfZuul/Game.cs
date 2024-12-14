@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Data.Common;
+using System.Linq;
 
 namespace WorldOfZuul
 {
@@ -64,14 +65,14 @@ namespace WorldOfZuul
 
         private void CreateItems(){
             items.Add(new Item(name:"Hamburger", description:"Mhmm burger.", x: 15, y: 15, roomNumber: 9, symbol: "🍔"));
-            items.Add(new Item(name:"Scissors", description:"Might have a useful use.", x: 22, y: 20, roomNumber: 6, symbol: "✁"));       }
+            items.Add(new Item(name:"Scissors", description:"Might have a useful use.", x: 22, y: 20, roomNumber: 3, symbol: "✁"));       }
 
         private void InitializeNPCs()
         {
             npcs.Add(new NPC("Whale", 2));
             npcs.Add(new NPC("Octopus", 3));
-            npcs.Add(new NPC("Sealion", 6));
-            npcs.Add(new NPC("SeaLionBaby", 8));
+            npcs.Add(new NPC("Sealion", 1));
+            npcs.Add(new NPC("SeaLionBaby", 1));
         }
 
         private char[] GetPossibleMoves(){
