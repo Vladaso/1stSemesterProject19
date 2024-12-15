@@ -27,14 +27,14 @@ namespace WorldOfZuul
             {
                 WhaleDialogue(game);
             }
-           // else if (game.player.Position == Room )
-           // {
-             //   CrabDialogue(game);
-           // }
-          //  else if (game.player.Position == 7)
-           // {
-           //     ScorpionDialogue(game);
-           //}
+            else if (game.player.Position == 8 )
+            {
+                CrabDialogue(game);
+            }
+            else if (game.player.Position == 7)
+            {
+                ScorpionDialogue(game);
+            }
             else{
                 throw new Exception("Something went wrong with the NPC dialogue.");
             }
@@ -234,8 +234,7 @@ private void CrabDialogue(Game game)
     {
 
         if (this.MissionStatus==0)
-        {
-            
+        {  
         
         Console.WriteLine("\nHi, it's me, Crab. I need help, and it's urgent!");
         Console.WriteLine("\n1. What happened?");

@@ -68,6 +68,8 @@ namespace WorldOfZuul
         {
             npcs.Add(new NPC("Whale", 2));
             npcs.Add(new NPC("Octopus", 3));
+            npcs.Add(new NPC("Crab", 8));
+            npcs.Add(new NPC("Scorpion", 7));
         }
 
         private char[] GetPossibleMoves(){
