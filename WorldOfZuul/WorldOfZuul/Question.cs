@@ -3,11 +3,13 @@ namespace WorldOfZuul {
         public string Text { get; set; }
         public List<string> Choices { get; set; }
         public string CorrectAnswer { get; set; }
+        public string Source { get; set; }
 
-        public Question(string text, List<string> choices, string correctAnswer) {
+        public Question(string text, List<string> choices, string correctAnswer, string source) {
             Text = text;
             Choices = choices;
             CorrectAnswer = correctAnswer;
+            Source = source;
         }
 
         public bool CheckAnswer(string? answer) {
