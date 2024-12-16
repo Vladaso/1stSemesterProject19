@@ -15,6 +15,36 @@ namespace WorldOfZuul {
 
         private void InitializeQuestions() {
             questions.Add(new Question(
+                "What percentage of Turtles have eaten plastic debris?", // text
+                new List<string> {"15%", "31%", "52%", "78%"}, // choices
+                "52%", // answer
+                "https://www.uq.edu.au/news/article/2015/09/world%E2%80%99s-turtles-face-plastic-deluge-danger" // source
+            ));
+            
+            questions.Add(new Question(
+                "Why are coral reefs important?", // text
+                new List<string> {"They produce most of the oxygen in Earth's atmosphere.", "They provide habitat, feeding, spawning, and nursery grounds for over 1 million aquatic species", "They are a major source of freshwater for nearby islands.", "They are the only habitat suitable for the Blue Whale."}, // choices
+                "They provide habitat, feeding, spawning, and nursery grounds for over 1 million aquatic species", // answer
+                "https://www.epa.gov/coral-reefs/basic-information-about-coral-reefs" // source
+            ));
+            
+            questions.Add(new Question(
+                "How much plastic waste gets into aquatic ecosystems every year?", // text
+                new List<string> {"1-2 million tonnes", "19-23 million tonnes", "5-10 million tonnes", "30-35 million tonnes"}, // choices
+                "19-23 million tonnes", // answer
+                "https://www.unep.org/plastic-pollution" // source
+            ));
+            
+            // questions.Add(new Question(
+            //     "", // text
+            //     new List<string> {}, // choices
+            //     "", // answer
+            //     "" // source
+            // ));
+
+            // OLD QUESIONS
+            /*
+            questions.Add(new Question(
                 "What is the main cause of water pollution?",
                 new List<string> { "Deforestation", "Industrial waste", "Overfishing", "Air pollution" },
                 "Industrial waste"
@@ -89,6 +119,7 @@ namespace WorldOfZuul {
                 new List<string> { "No effect", "Promotes healthy growth", "Causes algal blooms and dead zones", "Increases biodiversity" },
                 "Causes algal blooms and dead zones"
             ));
+            */
         }
 
         public Question GetRandomQuestion() {
@@ -104,9 +135,14 @@ namespace WorldOfZuul {
 
             if (question.CheckAnswer(answer)) {
                 Console.WriteLine("Correct!");
+                Console.WriteLine("source: " + question.Source); // source is displayed when the player guesses the question correctly
+                Console.WriteLine("Press Enter to continue");
+                Console.ReadLine();
                 return true;
             } else {
                 Console.WriteLine("Incorrect!");
+                Console.WriteLine("Press Enter to continue");
+                Console.ReadLine();
                 return false;
             }
         }

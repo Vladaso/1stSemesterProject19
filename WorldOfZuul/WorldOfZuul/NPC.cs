@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.Metrics;
+using System.Runtime.CompilerServices;
+using WorldOfZuul;
 
 namespace WorldOfZuul
 {
@@ -26,6 +28,10 @@ namespace WorldOfZuul
             else if (game.player.Position == 2)
             {
                 WhaleDialogue(game);
+            }
+            else if (game.player.Position == 5)
+            {
+                DolphinDialogue(game);
             }
             else if (game.player.Position == 1)
             {
@@ -421,19 +427,130 @@ namespace WorldOfZuul
                 game.screen.Display();
             }
         }
+        
+private void DolphinDialogue(Game game)
+{
+    while (true)
+    {
+        Console.WriteLine("\n*crying* oh hey... I'm the dolphin... *sob*");
+        Console.WriteLine("\n1. What happened? Why are you crying?");
+        Console.WriteLine("2. oh... Sorry, bye");
+        int choice = GetPlayerChoice(2);
 
-
-        private int GetPlayerChoice(int maxChoices)
+        if (choice == 1)
         {
-            //Doesnt accept anything other than an integer in the range
-            int choice;
-            do
+            Console.WriteLine("\nWell... *sob* You see, the coral reef is dying. And even though I'm a big mammal,");
+            Console.WriteLine("I'm really concerned about all my friends that rely on the reef to live. *sob*");
+            Console.WriteLine("\n1. What can I do to help?");
+            Console.WriteLine("2. Can You explain to me why the reefs are so important?");
+            Console.WriteLine("3. Sorry. I need to go.");
+            choice = GetPlayerChoice(3);
+
+            if (choice == 1)
             {
-                Console.Write("Choose an option: ");
-                string? input = Console.ReadLine();
-                int.TryParse(input, out choice);
-            } while (choice < 1 || choice > maxChoices);
-            return choice;
+                if (this.MissionStatus == 0)
+                {
+                    Console.WriteLine("\nMy friend Tauri the Turtle mentioned that he needs something from the reef,");
+                    Console.WriteLine("but I don't remember what it was, please find him and talk with him!");
+                    Console.WriteLine("\n1. OK! I'll go talk to him right now!");
+                    Console.WriteLine("2. Why does he need something from the reef?");
+                    Console.WriteLine("3. I don't have the time now. Bye.");
+                    choice = GetPlayerChoice(3);
+
+                    if (choice == 1)
+                    {
+                        Console.WriteLine("\nOh thank you so much! Here, I have a gift for You!");
+                        game.items.Add(new Item(name:"Blue Pearl", description:"Fintastic Pearl", x: 76, y: 18, roomNumber: this.RoomNumber, symbol: "🔵"));
+                        this.MissionStatus = 1;
+                        Console.WriteLine("\n1. Thank you! Bye!");
+                        GetPlayerChoice(1);
+                        break;
+                    }
+
+
+                    else if (choice == 2)
+                    {
+                        // source = https://www.uq.edu.au/news/article/2015/09/world%E2%80%99s-turtles-face-plastic-deluge-danger
+                        Console.WriteLine("\nHis kids ate plastic because they mistook it for a jellyfish!");
+                        Console.WriteLine("It's, a problem that's spreading, approximately 52% of turtles worldwide, have eaten plastic!");
+                        Console.WriteLine("\n1. Oh no!");
+                        GetPlayerChoice(1);
+                    }
+
+                    else if (choice == 3)
+                    {
+                        Console.WriteLine("\nOh... Ok, bye!");
+                        break;
+                    }
+
+                }
+                else
+                {
+                    Console.WriteLine("\nMy friend Tauri the Turtle mentioned that he needs something from the reef,");
+                    Console.WriteLine("but I don't remember what it was, please find him and talk with him!");
+                    Console.WriteLine("\n1. Why does he need something from the reef?");
+                    Console.WriteLine("2. Goodbye.");
+                    choice = GetPlayerChoice(2);
+
+                    if (choice == 1)
+                    {
+                        Console.WriteLine("\nHis kids ate plastic because they mistook it for a jellyfish!");
+                        Console.WriteLine("It's, a problem that's spreading, approximately 52% of turtles worldwide, have eaten plastic!");
+                        Console.WriteLine("\n1. Oh no!");
+                        GetPlayerChoice(1);
+                    }
+
+                    else if (choice == 2)
+                    {
+                        Console.WriteLine("\nOh... Ok, bye!");
+                        break;
+                    }
+
+                }
+
+                
+            }
+
+            else if (choice == 2)
+            {
+                // source = https://www.epa.gov/coral-reefs/basic-information-about-coral-reefs
+                Console.WriteLine("\nWell, around 25% of all aquatic life is dependant on them at some point in their life!");
+                Console.WriteLine("\nThey provide habitat, spawning and nursery grounds for over 1 million species!");
+                Console.WriteLine("1. Wow thank You for this information!");
+                GetPlayerChoice(1);
+            }
+
+            else if (choice == 3)
+            {
+                Console.WriteLine("\nOh... Goodbye...");
+                break;
+            }
+        }
+        else
+        {
+            Console.WriteLine("\n Noo, please stay, we all could use Your help!");
+            break;
+        }
+
+        ConsoleUtils.ClearConsole();
+        game.screen.Display();
+    }
+}
+
+
+
+private int GetPlayerChoice(int maxChoices)
+{
+    //Doesnt accept anything other than an integer in the range
+    int choice;
+    do
+    {
+        Console.Write("Choose an option: ");
+        string? input = Console.ReadLine();
+        int.TryParse(input, out choice);
+    } while (choice < 1 || choice > maxChoices);
+    return choice;
         }
     }
 }
+
