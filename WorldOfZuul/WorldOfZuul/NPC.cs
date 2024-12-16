@@ -27,6 +27,10 @@ namespace WorldOfZuul
             {
                 WhaleDialogue(game);
             }
+            else if (game.player.Position == 4)
+            {
+                TurtleDialogue(game);
+            }
             else
             {
                 throw new Exception("Something went wrong with the NPC dialogue.");
@@ -221,63 +225,92 @@ namespace WorldOfZuul
             }
         }
 
-        private void CrabDialogue(Game game)
+        private void TurtleDialogue(Game game)
         {
             while (true)
             {
-                Console.WriteLine("""
-                    O  o
-                     o 
-        Bloop bloop .  Oh! Hi there, friend! I’m Tauri the Turtle, and we’ve got a big problem in my turlte-family. Can you help us?."
-        1. Tell me more—what’s happening?
-        2. I’m ready! What can I do?
-        3. Sorry, Tauri, I can’t right now.
-        """);
-                int choice = GetPlayerChoice(3);
-
-                if (choice == 1)
+                if (this.MissionStatus == 0)
                 {
-                    Console.WriteLine("""
-                    Oh no, oh no, oh no! It’s a disaster, my kids thought those floating microplastics were jellyfish and gobbled them up! 
-                    Now they’re not feeling well, and I need help to save them.
-                    1. That's horrifying! How can I help?
-                    2. Oh! I see! I'll come back later.
-                    """);
-                    choice = GetPlayerChoice(2);
+                    Console.WriteLine("          O  o ");
+                    Console.WriteLine("            o ");
+                    Console.WriteLine("Bloop bloop .  Oh! Hi there, friend! I’m Tauri the Turtle, and we’ve got a big problem in my turlte-family. Can you help us?.");
+                    Console.WriteLine("1. Tell me more—what’s happening?");
+                    Console.WriteLine("2. I believe I have what you are looking for!");
+                    Console.WriteLine("3. Sorry, Tauri, I can’t right now.");
+                    int choice = GetPlayerChoice(3);
+
                     if (choice == 1)
                     {
-                        Console.WriteLine("""
-                        My kids need Bubble Berries to cleanse their tummies! They’re tiny, purple glowing berries that float near the reefs.
-                        Hurry up! My kids are in danger!
-                        """);
-                        break;
+                        Console.WriteLine("Oh no, oh no, oh no! It’s a disaster, my kids thought those floating microplastics were jellyfish and gobbled them up!");
+                        Console.WriteLine("Now they’re not feeling well, and I need help to save them.");
+                        Console.WriteLine("1. That's horrifying! How can I help?");
+                        Console.WriteLine("2. Oh! I see! I'll come back later.");
+                        int choice_1 = GetPlayerChoice(2);
+
+                        if (choice_1 == 1)
+                        {
+                            Console.WriteLine("My kids need Bubble Berries to cleanse their tummies! They’re tiny, purple glowing berries that float near the reefs.");
+                            Console.WriteLine("Hurry up! My kids are in danger!");
+                            game.items.Add(new Item(name: "Bubble Berries", description: "Healing Bubble", x: 22, y: 4, roomNumber: 5, symbol: "🫧"));
+                            Console.WriteLine("1. I'll be be back soon with the Bubble Berries!");
+                            int choice_11 = GetPlayerChoice(1);
+                            break;
+                        }
+                        else if (choice_1 == 2)
+                        {
+                            Console.WriteLine("Oh... alright. I guess I’ll try to keep them calm while you’re away.");
+                            Console.WriteLine("Please don’t forget about us! We are counting on you...");
+                            Console.WriteLine("1. I’ll do my best!.");
+                            Console.WriteLine("2. Can’t promise, I am busy today.");
+                            int choice_2 = GetPlayerChoice(2);
+                            break;
+                        }
                     }
                     else if (choice == 2)
                     {
-                        Console.WriteLine("""
-                            Oh... alright. I guess I’ll try to keep them calm while you’re away.");
-                            Please don’t forget about us! We are counting on you...
-                        """);
+                        if (!game.inventory.items.Any(item => item.Name == "Bubble Berries"))
+                        {
+                            Console.WriteLine("Wait a second... you don’t have any Bubble Berries yet! They’re small, glowing, and float near the reefs. Keep searching—you’re so close, I can feel it!");
+                            Console.WriteLine("1. I'll search better!");
+                            int choice_2 = GetPlayerChoice(1);
+
+                        }
+                        else
+                        {
+                            game.inventory.items.RemoveAll(item => item.Name == "Bubble Berries");
+                            Console.WriteLine("You found them! Bubble-tastic work! These berries saved our family. I can’t thank you enough—you’ve saved the day!");
+                            Console.WriteLine("Here, take this Green Pearl as a token of my gratitude. You’ve got the heart of a true ocean hero!");
+                            game.items.Add(new Item("Green Pearl", "Fintastic Pearl", 30, 17, this.RoomNumber, "🟢"));
+                            this.MissionStatus = 1;
+                            Console.WriteLine("Mission complete!");
+                            Console.WriteLine("1. I am happy to help!");
+
+                            int choice_2 = GetPlayerChoice(1);
+                            break;
+
+                        }
+                    }
+                    else if (choice == 3)
+                    {
+                        Console.WriteLine("Oh… I see. Well, I understand. But please don’t forget about us. My little ones really need help!");
+                        Console.WriteLine("Please come back soon. Their health depends on you.");
+                        Console.WriteLine("1. I’ll do my best!.");
+                        Console.WriteLine("2. Can’t promise, I am busy today.");
+
+                        int choice_3 = GetPlayerChoice(2);
+
                         break;
                     }
                 }
-                else if (choice == 2)
+                else
                 {
-                        Console.WriteLine("""
-                        Great! We need Bubble Berries to help my kids recover.
-                        Look around Finlandia some of them are easy to spot.
-                        They’re tiny, purple glowing berries that float near the reefs.
-                        Bring them as soon as you can!
-                        """);
-                        break;
-                }
-                else if (choice == 3)
-                {
-                        Console.WriteLine("""
-                        Oh… I see. Well, I understand. But please don’t forget about us. My little ones really need help!
-                        Please come back soon. Their health depends on you.
-                        """);
-                        break;
+                    Console.WriteLine("Hi again! My kids are feeling better thanks to those Bubble Berries you found for us!");
+                    Console.WriteLine("But there are more problems going on in Finlandia");
+                    Console.WriteLine("Keep on searching for more challenges!");
+                    Console.WriteLine("1. Goodbye");
+                    int choice_c = GetPlayerChoice(1);
+                    break;
+
                 }
 
                 ConsoleUtils.ClearConsole();
