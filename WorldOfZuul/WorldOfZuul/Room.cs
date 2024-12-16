@@ -19,6 +19,7 @@
             RoomName = roomName;
             LongDescription = longDesc;
         }
+    
 
         //Code bellow asigns exits for Room class
         public void SetExits(Room? north, Room? east, Room? south, Room? west)
@@ -35,5 +36,6 @@
             if (neighbor != null)
                 Exits[direction] = neighbor;
         }
+
     }
 }

@@ -60,7 +60,12 @@ public class Inventory{
 
             return sb.ToString();
         }
-
+public bool HasItem(string itemName)
+{
+    // Check if any item in the list matches the given name
+    return items.Exists(item => item.Name == itemName);
 }
+}
+
 }
 
