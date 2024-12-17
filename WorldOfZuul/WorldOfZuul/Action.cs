@@ -22,6 +22,8 @@ namespace WorldOfZuul
                 Item p = game.items.Where(item => item.RoomNumber == game.player.Position).ToList().FirstOrDefault()!;
                 game.inventory.AddItem(p); //Ignore warning is never null if p is a possible move
                 game.items.Remove(p);
+                Console.WriteLine("Press ENTER to continue");
+                Console.ReadLine();
             }
                 else if (command == 'm')
             {

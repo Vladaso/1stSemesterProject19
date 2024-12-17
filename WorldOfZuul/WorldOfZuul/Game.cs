@@ -46,6 +46,7 @@ namespace WorldOfZuul
             rooms.Add(new Room(7, "Pyramid room", "Placeholder"));
             rooms.Add(new Room(8, "Bag Room", "Placeholder"));
             rooms.Add(new Room(9, "Maze room", "Placeholder"));
+            rooms.Add(new Room(10, "Tower", "Placeholder"));
 
         
         }
@@ -69,6 +70,7 @@ namespace WorldOfZuul
 
         private void InitializeNPCs()
         {
+            npcs.Add(new NPC("Frog", 0));
             npcs.Add(new NPC("Whale", 2));
             npcs.Add(new NPC("Octopus", 3));
             npcs.Add(new NPC("Sealion", 1));
@@ -77,6 +79,7 @@ namespace WorldOfZuul
             npcs.Add(new NPC("Dolphin", 5));
             npcs.Add(new NPC("Crab", 8));
             npcs.Add(new NPC("Scorpion", 7));
+            npcs.Add(new NPC("Princess", 10));
         }
 
         private char[] GetPossibleMoves(){

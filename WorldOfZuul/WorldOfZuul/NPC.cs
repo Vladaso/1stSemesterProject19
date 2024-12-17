@@ -1,8 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Diagnostics.Metrics;
-using System.Runtime.CompilerServices;
-using WorldOfZuul;
 
 namespace WorldOfZuul
 {
@@ -17,9 +12,6 @@ namespace WorldOfZuul
             RoomNumber = roomNumber;
         }
 
-        public int crabVisited = 0;
-        public int scorpionVisited = 0;
-
 
         //Could be made static doesn't matter too much
         public void StartDialogue(Game game)
@@ -27,6 +19,9 @@ namespace WorldOfZuul
             if (game.player.Position == 3)
             {
                 OctopusDialogue(game);
+            }
+            else if(game.player.Position == 0){
+                FrogDialogue(game);
             }
             else if (game.player.Position == 2)
             {
@@ -55,6 +50,9 @@ namespace WorldOfZuul
             else if (game.player.Position == 6)
             {
                 SeaHorseDialogue(game);
+            }
+            else if(game.player.Position == 10){
+                PrincessDialogue(game);
             }
             else
             {
@@ -255,7 +253,7 @@ namespace WorldOfZuul
             while (true)
             {
                 Console.WriteLine("\nHello, I am the elder sea lion. How may I help you?");
-                Console.WriteLine("1. Do you know anything about the orange Fintastic pearl?");
+                Console.WriteLine("1. Do you know anything about the Fintastic pearls?");
                 Console.WriteLine("2. Eh, I don't feel like talking to you right now.");
                 int choice = GetPlayerChoice(2);
 
@@ -263,6 +261,8 @@ namespace WorldOfZuul
                 {
                     if (this.MissionStatus == 0) // Mission not started
                     {
+                            Console.WriteLine("\nWhy of course I do, I own the Yellow Fintastic pearl.");
+                            Console.WriteLine("\nI will give it to you I just need a small favor from you.");
                         Console.WriteLine("\nMy friend, the sea horse, is stuck in some nets! Please help rescue them.");
                         Console.WriteLine("1. I will help.");
                         Console.WriteLine("2. Sorry, I can't help right now.");
@@ -271,19 +271,27 @@ namespace WorldOfZuul
                         if (choice == 1)
                         {
                             Console.WriteLine("\nThank you! You can find my friend nearby. Please rescue them!");
-                            game.npcs.First(npc => npc.name == "Sea Horse").StartDialogue(game); // Trigger the sea horse dialogue
+                            Console.WriteLine("1. OK");
+                            choice = GetPlayerChoice(1);
+                            this.MissionStatus = 1; // Mark mission as started
                         }
                         else
                         {
                             Console.WriteLine("\nI understand. Please come back if you change your mind.");
                         }
                     }
-                    else if (this.MissionStatus == 1) // Mission complete
+                    else if(this.MissionStatus==1){
+                        Console.WriteLine("\nHave you saved my friend yet?");
+                        Console.WriteLine("1. Not yet.");
+                        GetPlayerChoice(1);
+                    }
+                    else if (this.MissionStatus == 2) // Mission complete
                     {
-                        Console.WriteLine("\nThank you for saving my friend! As a reward, here is the orange Fintastic pearl.");
-                        game.items.Add(new Item("Orange Pearl", "Fintastic Pearl", 15, 15, this.RoomNumber, "🟠"));
-                        this.MissionStatus = 2; // Mark mission as complete
-                        Console.WriteLine("Mission complete!");
+                        Console.WriteLine("\nThank you for saving my friend! As a reward, here is the yellow Fintastic pearl.");
+                        game.items.Add(new Item("Yellow Pearl", "Fintastic Pearl", 15, 15, this.RoomNumber, "🟡"));
+                        this.MissionStatus = 3;
+                        Console.WriteLine("\n1. Thank you!");
+                        GetPlayerChoice(1);
                         break;
                     }
                 }
@@ -299,6 +307,22 @@ namespace WorldOfZuul
 
         private void SeaHorseDialogue(Game game)
         {
+            var seaLion = game.npcs.First(npc => npc.name == "Sealion");
+            if(seaLion.MissionStatus == 0){
+                Console.WriteLine("\n*You see a SeaHorse struggling in a net, but you have more urgent business right now.*");
+                Console.WriteLine("1 I'll come back later.");
+                int choice = GetPlayerChoice(1);
+                ConsoleUtils.ClearConsole();
+                game.screen.Display();
+            }
+            else if(seaLion.MissionStatus >=2){
+                Console.WriteLine("\nThanks for the help again!");
+                Console.WriteLine("1 No problem!");
+                int choice = GetPlayerChoice(1);
+                ConsoleUtils.ClearConsole();
+                game.screen.Display();
+            }
+            else{
             while (true)
             {
                 Console.WriteLine("\nHey there, stranger, please help me. I am stuck in these nets!");
@@ -319,13 +343,17 @@ namespace WorldOfZuul
                         {
                             Console.WriteLine("\nYou use the scissors to cut the nets and free the sea horse!");
                             Console.WriteLine("The sea horse swims away happily.");
-                            this.MissionStatus = 1;
+                            game.npcs.First(npc => npc.name == "Sealion").MissionStatus = 2;
                             Console.WriteLine("You should return to the elder sea lion.");
+                            Console.WriteLine("1. OK");
+                            GetPlayerChoice(1);
                             break;
                         }
                         else
                         {
                             Console.WriteLine("\nYou don't have the scissors needed to free the sea horse.");
+                            Console.WriteLine("1. Oh");
+                            GetPlayerChoice(1);
                             break;
                         }
                     }
@@ -342,6 +370,7 @@ namespace WorldOfZuul
                 }
                 ConsoleUtils.ClearConsole();
                 game.screen.Display();
+            }
             }
         }
 
@@ -547,118 +576,56 @@ private void DolphinDialogue(Game game)
         game.screen.Display();
     }
 }
-        private void CrabDialogue(Game game)
+private void CrabDialogue(Game game)
+{
+    while (true)
+    {
+        if (MissionStatus == 0)
         {
-            while (true)
+            Console.WriteLine("\nHi, it's me, Crab. I need help, and it's urgent!");
+            Console.WriteLine("\n1. What happened?");
+            Console.WriteLine("2. How can I help?");
+            Console.WriteLine("3. Goodbye.");
+            int choice = GetPlayerChoice(3);
+
+            if (choice == 1)
             {
-                if (MissionStatus == 0)
+                Console.WriteLine("\nIt's this horrible plastic bag! Humans left it floating around, and now I'm stuck in it.");
+                Console.WriteLine("I can't move, and it's suffocating me. This ocean used to be our home, not a trash bin!");
+                Console.WriteLine("\n1. That's terrible! How can I help?");
+                Console.WriteLine("2. Oh no, good luck with that.");
+                choice = GetPlayerChoice(2);
+
+                if (choice == 1)
                 {
-                    if (scorpionVisited == 0)
-                    {
-
-                        Console.WriteLine("\nHi, it's me, Crab. I need help, and it's urgent!");
-                        Console.WriteLine("\n1. What happened?");
-                        Console.WriteLine("2. How can I help?");
-                        Console.WriteLine("3. Goodbye.");
-                        int choice = GetPlayerChoice(3);
-
-                        if (choice == 1)
-                        {
-                            Console.WriteLine("\nIt's this horrible plastic bag! Humans left it floating around, and now I'm stuck in it.");
-                            Console.WriteLine("I can't move, and it's suffocating me. This ocean used to be our home, not a trash bin!");
-                            Console.WriteLine("\n1. That's terrible! How can I help?");
-                            Console.WriteLine("2. Oh no, good luck with that.");
-                            choice = GetPlayerChoice(2);
-
-                            if (choice == 1)
-                            {
-                                Console.WriteLine("\nThank you! There's a Scorpion nearby. Its claws are strong enough to cut me free.");
-                                Console.WriteLine("Please find it and bring it here before it's too late!");
-                                Console.WriteLine("1. Okay, I will try to find him!");
-                                crabVisited = 1;
-                                // MISION STATUS + + ????
-                                GetPlayerChoice(1);
-                                break;
-                            }
-                            else
-                            {
-                                Console.WriteLine("\nFine! I guess I'll just sit here and watch my home turn into a dump. Thanks for nothing!");
-                                break;
-                            }
-                        }
-                        else if (choice == 2)
-                        {
-                            Console.WriteLine("\nYou can help by finding the Scorpion! Its claws are sharp enough to cut me free. Please hurry!");
-                            Console.WriteLine("1. Okay, I will try to find him!");
-                            crabVisited = 1;
-                            GetPlayerChoice(1);
-                            break;
-                        }
-                        else
-                        {
-                            Console.WriteLine("\nYou're leaving me like this? Really? Just remember, the ocean's fate affects everyone, even you. Goodbye...");
-                            break;
-                        }
-                    }
-
-
-                    else if (scorpionVisited == 1)
-                    {
-                        Console.WriteLine("\nOh, thank you, thank you! I can finally move and breathe again!");
-                        Console.WriteLine("\n1. I'm glad you're okay. It must have been terrifying.");
-                        Console.WriteLine("2. No problem, just trying to help.");
-                        int choice = GetPlayerChoice(2);
-
-                        if (choice == 1)
-                        {
-                            Console.WriteLine("\nIt was terrifying! Imagine being trapped, unable to move, while your home is slowly turned into a landfill.");
-                            Console.WriteLine("But you saved me, and for that, I owe you everything!");
-                        }
-                        else if (choice == 2)
-                        {
-                            Console.WriteLine("\nWell, your help means more than you can imagine. Not many would care about a little crab like me.");
-                        }
-
-                        Console.WriteLine("\nI don't have much, but I found this Red Pearl while digging in the sand. It has a special power—take it as my thanks.");
-                        game.items.Add(new Item(name: "Red Pearl", description: "Fintastic Pearl", x: 15, y: 15, roomNumber: this.RoomNumber, symbol: "🔴"));
-                        MissionStatus = 1;
-                        Console.WriteLine("\nYou've received the **Red Pearl**! Its power reveals hidden map in your journey.");
-
-                        Console.WriteLine("\nPlease, remember to protect our ocean. If more people cared like you, maybe we wouldn't be drowning in human waste.");
-                        Console.WriteLine("\n1. I'll do my best.");
-                        Console.WriteLine("2. Goodbye, and take care.");
-                        choice = GetPlayerChoice(2);
-
-                        if (choice == 1)
-                        {
-                            Console.WriteLine("\nThank you! Every little effort makes a difference. Safe travels, my friend!");
-                            break;
-                        }
-                        else if (choice == 2)
-                        {
-                            Console.WriteLine("\nGoodbye! And thank you again for giving me a second chance.");
-                            break;
-                        }
-
-                    }
-
-                    else
-                    {
-                        Console.WriteLine("Hi again. Do you need anything?");
-                        Console.WriteLine("1. Hi. No, Iam just passing by.");
-                        GetPlayerChoice(1);
-                        break;
-                    }
-                    ConsoleUtils.ClearConsole();
-                    game.screen.Display();
-
+                    Console.WriteLine("\nThank you! There's a Scorpion nearby. Its claws are strong enough to cut me free.");
+                    Console.WriteLine("Please find it and bring it here before it's too late!");
+                    Console.WriteLine("1. Okay, I will try to find him!");
+                    MissionStatus = 1;
+                    GetPlayerChoice(1);
+                    break;
                 }
-
-
+                else
+                {
+                    Console.WriteLine("\nFine! I guess I'll just sit here and watch my home turn into a dump. Thanks for nothing!");
+                    break;
+                }
+            }
+            else if (choice == 2)
+            {
+                Console.WriteLine("\nYou can help by finding the Scorpion! Its claws are sharp enough to cut me free. Please hurry!");
+                Console.WriteLine("1. Okay, I will try to find him!");
+                MissionStatus = 1;
+                GetPlayerChoice(1);
+                break;
+            }
+            else
+            {
+                Console.WriteLine("\nYou're leaving me like this? Really? Just remember, the ocean's fate affects everyone, even you. Goodbye...");
+                break;
             }
         }
-
-        private void CrabRescueDialogue(Game game)
+        else if (MissionStatus == 2)
         {
             Console.WriteLine("\nOh, thank you, thank you! I can finally move and breathe again!");
             Console.WriteLine("\n1. I'm glad you're okay. It must have been terrifying.");
@@ -677,7 +644,7 @@ private void DolphinDialogue(Game game)
 
             Console.WriteLine("\nI don't have much, but I found this Red Pearl while digging in the sand. It has a special power—take it as my thanks.");
             game.items.Add(new Item(name: "Red Pearl", description: "Fintastic Pearl", x: 15, y: 15, roomNumber: this.RoomNumber, symbol: "🔴"));
-
+            MissionStatus = 3;
             Console.WriteLine("\nYou've received the **Red Pearl**! Its power reveals hidden map in your journey.");
 
             Console.WriteLine("\nPlease, remember to protect our ocean. If more people cared like you, maybe we wouldn't be drowning in human waste.");
@@ -688,66 +655,191 @@ private void DolphinDialogue(Game game)
             if (choice == 1)
             {
                 Console.WriteLine("\nThank you! Every little effort makes a difference. Safe travels, my friend!");
+                break;
             }
             else if (choice == 2)
             {
                 Console.WriteLine("\nGoodbye! And thank you again for giving me a second chance.");
+                break;
             }
+        }
+        else
+        {
+            Console.WriteLine("Hi again. Do you need anything?");
+            Console.WriteLine("1. Hi. No, I am just passing by.");
+            GetPlayerChoice(1);
+            break;
+        }
+        ConsoleUtils.ClearConsole();
+        game.screen.Display();
+    }
+}
 
-            ConsoleUtils.ClearConsole();
-            game.screen.Display();
+private void ScorpionDialogue(Game game)
+{
+    while (true)
+    {
+        if (MissionStatus == 0 && game.npcs.First(npc => npc.name == "Crab").MissionStatus == 1)
+        {
+            Console.WriteLine("\nAh, a visitor! What brings you to me?");
+            Console.WriteLine("\n1. A crab is trapped in a plastic bag. Can you help?");
+            Console.WriteLine("2. Just passing by, never mind.");
+            int choice = GetPlayerChoice(2);
+
+            if (choice == 1)
+            {
+                Console.WriteLine("\nA crab in trouble? Of course, I can help! Show me where it is.");
+                Console.WriteLine("\nThe Scorpion scuttles away to free the Crab...");
+                MissionStatus = 1; 
+                game.npcs.First(npc => npc.name == "Crab").MissionStatus = 2;
+                Console.WriteLine("1. Nice!");
+                GetPlayerChoice(1);
+                break;
+            }
+            else if (choice == 2)
+            {
+                Console.WriteLine("\nHmm, okay then. But if you need me, you know where to find me.");
+                break;
+            }
+        }
+        else
+        {
+            Console.WriteLine("Hi again! Do you need something?");
+            Console.WriteLine("1. Hi! I am just passing by.");
+            GetPlayerChoice(1);
+            break;
+        }
+        ConsoleUtils.ClearConsole();
+        game.screen.Display();
+    }
+}
+private void FrogDialogue(Game game)
+{
+    while (true)
+    {
+        Console.WriteLine("\nRibbit! I'm the Frog, guarding the tower with the princess. I'm really hungry. Can you get me a hamburger?");
+        Console.WriteLine("\n1. Sure, I'll get you a hamburger.");
+        Console.WriteLine("2. Sorry, I can't help right now.");
+        int choice = GetPlayerChoice(2);
+
+        if (choice == 1)
+        {
+            if (game.inventory.HasItem("Hamburger"))
+            {
+                Console.WriteLine("\nThank you so much! This hamburger is delicious!");
+                game.inventory.items.RemoveAll(item => item.Name == "Hamburger");
+                MissionStatus = 1;
+
+                Console.WriteLine("\nFine you can see the princess now.");
+                game.edges.Add(new Edge(0, 10, "west"));
+
+                Console.WriteLine("\n1. You're welcome!");
+                GetPlayerChoice(1);
+                break;
+            }
+            else
+            {
+                Console.WriteLine("\nYou don't have a hamburger. Please come back when you have one.");
+                Console.WriteLine("\n1. Okay, I'll be back.");
+                GetPlayerChoice(1);
+                break;
+            }
+        }
+        else if (choice == 2)
+        {
+            Console.WriteLine("\nOh, that's too bad. I'm really hungry. Please come back if you change your mind.");
+            break;
+        }
+        ConsoleUtils.ClearConsole();
+        game.screen.Display();
+    }
+}
+private void PrincessDialogue(Game game)
+{
+    while (true)
+    {
+        Console.WriteLine("\nOh my! How did you get here? I'm the Princess of Finlandia.");
+        Console.WriteLine("\n1. I found my way here. Can you tell me about the troubles of fish living in Finlandia?");
+        Console.WriteLine("2. Can you fix the filtration system?");
+        Console.WriteLine("3. Goodbye.");
+        int choice = GetPlayerChoice(3);
+
+        if (choice == 1)
+        {
+            Console.WriteLine("\nThe fish in Finlandia are struggling to survive. The pollution has made it difficult for them to find clean water and food.");
+            Console.WriteLine("Many species are on the brink of extinction. We need to restore the balance to save them.");
+            Console.WriteLine("\n1. That's terrible. Can you fix the filtration system?");
+            Console.WriteLine("2. Goodbye.");
+            choice = GetPlayerChoice(2);
+
+            if (choice == 1)
+            {
+                choice = 2; // Redirect to the second option
+            }
+            else
+            {
+                Console.WriteLine("\nGoodbye!");
+                break;
+            }
         }
 
-
-        private void ScorpionDialogue(Game game)
+        if (choice == 2)
         {
-            while (true)
+            Console.WriteLine("\nYes, I can fix the filtration system, but my wand is missing power.");
+            Console.WriteLine("I need the 6 Fintastic Pearls to restore its power: Green, Red, Blue, Purple, Orange, and Yellow.");
+            Console.WriteLine("\n1. I have all the pearls you need.");
+            Console.WriteLine("2. I don't have all the pearls yet.");
+            choice = GetPlayerChoice(2);
+
+            if (choice == 1)
             {
-                if (this.MissionStatus == 0)
+                if (game.inventory.HasItem("Green Pearl") &&
+                    game.inventory.HasItem("Red Pearl") &&
+                    game.inventory.HasItem("Blue Pearl") &&
+                    game.inventory.HasItem("Purple Pearl") &&
+                    game.inventory.HasItem("Orange Pearl") &&
+                    game.inventory.HasItem("Yellow Pearl"))
                 {
-                    if (crabVisited == 1)
-                    {
-                        Console.WriteLine("\nAh, a visitor! What brings you to me again?");
-                        Console.WriteLine("\n1. A crab is trapped in a plastic bag. Can you help?");
-                        Console.WriteLine("2. Just passing by, never mind.");
-                        int choice = GetPlayerChoice(2);
+                    Console.WriteLine("\nThank you so much! With these pearls, I can restore the power to my wand and fix the filtration system.");
+                    // Remove the pearls from the inventory
+                    game.inventory.items.RemoveAll(item => item.Name == "Green Pearl");
+                    game.inventory.items.RemoveAll(item => item.Name == "Red Pearl");
+                    game.inventory.items.RemoveAll(item => item.Name == "Blue Pearl");
+                    game.inventory.items.RemoveAll(item => item.Name == "Purple Pearl");
+                    game.inventory.items.RemoveAll(item => item.Name == "Orange Pearl");
+                    game.inventory.items.RemoveAll(item => item.Name == "Yellow Pearl");
 
-                        if (choice == 1)
-                        {
-                            Console.WriteLine("\nA crab in trouble? Of course, I can help! Show me where it is.");
-                            Console.WriteLine("\nThe Scorpion scuttles away to free the Crab...");
-                            this.MissionStatus = 1;
-                            scorpionVisited = 1;
-
-                            break;
-                        }
-                        else if (choice == 2)
-                        {
-                            Console.WriteLine("\nHmm, okay then. But if you need me, you know where to find me.");
-                            break;
-                        }
-                    }
-                    else
-                    {
-                        Console.WriteLine("Hi, do you need something?");
-                        Console.WriteLine("1. Hi. No, Iam jsut passing by.");
-                        GetPlayerChoice(1);
-                        break;
-                    }
-                    ConsoleUtils.ClearConsole();
-                    game.screen.Display();
+                    Console.WriteLine("\n*The Princess uses the pearls to restore the power to her wand and fixes the filtration system.*");
+                    Console.WriteLine("\nFinlandia is saved! Thank you for your help!");
+                    Console.WriteLine("\n1. You're welcome!");
+                    GetPlayerChoice(1);
+                    break;
                 }
                 else
                 {
-                    Console.WriteLine("Hi again! Do you need something?");
-                    Console.WriteLine("1. Hi! Iam just passing by.");
+                    Console.WriteLine("\nYou don't have all the pearls yet. Please come back when you have all six.");
+                    Console.WriteLine("\n1. Okay, I'll be back.");
                     GetPlayerChoice(1);
                     break;
                 }
             }
-
-
+            else if (choice == 2)
+            {
+                Console.WriteLine("\nPlease come back when you have all six pearls. The future of Finlandia depends on it.");
+                Console.WriteLine("\n1. Okay, I'll be back.");
+                GetPlayerChoice(1);
+                break;
+            }
         }
+        else if (choice == 3)
+        {
+            Console.WriteLine("\nGoodbye!");
+            break;
+        }
+        ConsoleUtils.ClearConsole();
+        game.screen.Display();
+    }
+}
 
 
 private int GetPlayerChoice(int maxChoices)
