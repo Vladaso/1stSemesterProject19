@@ -39,7 +39,7 @@ namespace WorldOfZuul
             rooms.Add(new Room(1, "Sealion Room", "Placeholder"));
             rooms.Add(new Room(2, "Whale Room", "Placeholder"));
             rooms.Add(new Room(3, "Cave Room", "Placeholder"));
-            rooms.Add(new Room(4, "Bottle Room", "Placeholder"));
+            rooms.Add(new Room(4, "Reef Room", "Placeholder"));
             rooms.Add(new Room(5, "Broom Room", "Placeholder"));
             rooms.Add(new Room(6, "Diamond Room", "Placeholder"));
             rooms.Add(new Room(7, "Pyramid room", "Placeholder"));
