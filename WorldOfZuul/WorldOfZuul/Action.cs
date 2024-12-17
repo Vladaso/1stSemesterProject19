@@ -23,6 +23,13 @@ namespace WorldOfZuul
                 game.inventory.AddItem(p); //Ignore warning is never null if p is a possible move
                 game.items.Remove(p);
             }
+                else if (command == 'm')
+            {
+                Map map = new Map(game);
+                map.DisplayMap();
+                Console.WriteLine("Press ENTER to return to the game.");
+                Console.ReadLine();
+            }
             else{
                 throw new System.Exception("Invalid command");
             }

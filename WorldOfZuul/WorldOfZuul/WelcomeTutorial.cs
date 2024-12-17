@@ -80,10 +80,10 @@ namespace WorldOfZuul
 │                        │    In each room,you'll see     │      /_|   o             │
 │                        │  available actions and items   │     ('_)<|               │
 │                        │      in your Action Bar.       │      \_|                 │
-│                     o  │                                │                          │
-│                 o      │     q - terminate the game     │              mmm         │
-│   mmm             /_|  │     t - start the dialogue     │              )-(         │
-│   )-(            ('_)<|│     p - pick the item          │             (   )        │
+│                     o  │         For example:           │                          │
+│                 o      │     q - terminate game         │              mmm         │
+│   mmm             /_|  │     t - start dialogue         │              )-(         │
+│   )-(            ('_)<|│     p - pick up item           │             (   )        │
 │  (   )  o         \_|  └────────────────────────────────┘             |   |    o   │
 │  |   |                     [PRESS ENTER TO CONTINUE]                  |   |        │
 │  |   |                                                            o   |___|        │
@@ -107,13 +107,13 @@ namespace WorldOfZuul
 │          |   |         ┌────────────────────────────────┐                 |   |    │
 │          |___|         │   Inventory and Polution Bar   │       o         |___|    │
 │                  o     │                                │                          │
-│                        │   Your inventor will be above  │      /_|   o             │
+│                        │  Your inventory will be above  │      /_|   o             │
 │                        │        the main screen.        │     ('_)<|               │
 │                        │                                │      \_|                 │
-│                     o  │   By every movement there is   │                          │
-│                 o      │     a polution bar that will   │              mmm         │
-│   mmm             /_|  │           increase.            │              )-(         │
-│   )-(            ('_)<|│                                │             (   )        │
+│                     o  │    With every move there is a  │                          │
+│                 o      │     polution bar increase.     │              mmm         │
+│   mmm             /_|  │       You lose when it         │              )-(         │
+│   )-(            ('_)<|│        reaches a 100%          │             (   )        │
 │  (   )  o         \_|  └────────────────────────────────┘             |   |    o   │
 │  |   |                     [PRESS ENTER TO CONTINUE]                  |   |        │
 │  |   |                                                            o   |___|        │

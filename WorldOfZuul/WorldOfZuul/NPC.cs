@@ -52,6 +52,10 @@ namespace WorldOfZuul
             {
                 ScorpionDialogue(game);
             }
+            else if (game.player.Position == 6)
+            {
+                SeaHorseDialogue(game);
+            }
             else
             {
                 throw new Exception("Something went wrong with the NPC dialogue.");
@@ -104,26 +108,6 @@ namespace WorldOfZuul
                     Console.WriteLine("2. Thank you, that's all.");
                     choice = GetPlayerChoice(2);
 
-                    if (choice == 1)
-                    {
-                        Console.WriteLine("\nMy knowledge is vast, but I sense your journey's success depends on your own perseverance.");
-                        Console.WriteLine("Seek the pearls, for they hold the key to a brighter future.");
-                        Console.WriteLine("\n1. Thank you for the advice.");
-                        GetPlayerChoice(1);
-                    }
-                    else
-                    {
-                        Console.WriteLine("\nGoodbye!");
-                        break;
-                    }
-                }
-                else if (choice == 3)
-                {
-                    Console.WriteLine("\nAh, the Fintastic pearls. They are crucial for restoring the balance of this world.");
-                    Console.WriteLine("\n1. Where can I find one?");
-                    Console.WriteLine("2. Why are they important?");
-                    Console.WriteLine("3. Thank you for your wisdom.");
-                    choice = GetPlayerChoice(3);
                     if (choice == 1)
                     {
                         Console.WriteLine("\nMy knowledge is vast, but I sense your journey's success depends on your own perseverance.");
@@ -267,102 +251,99 @@ namespace WorldOfZuul
             }
         }
         private void SeaLionDialogue(Game game)
-{
-    // Assuming the elder sea lion is at index 1 and baby sea lion at index 0
-    NPC babySeaLion = game.npcs[0];
-    NPC elderSeaLion = game.npcs[1];
-
-    while (true)
-    {
-        Console.WriteLine("\nHello, I am the elder sea lion. How may I help you?");
-        Console.WriteLine("1. Do you know anything about the orange Fintastic pearl?");
-        Console.WriteLine("2. Eh, I don't feel like talking to you right now.");
-        int choice = GetPlayerChoice(2);
-
-        if (choice == 1)
         {
-            if (babySeaLion.MissionStatus == 0) // Baby sea lion mission not started
+            while (true)
             {
-                Console.WriteLine("\nMy baby is stuck in some nets! Please help rescue them.");
-                Console.WriteLine("1. I will help.");
-                Console.WriteLine("2. Sorry, I can't help right now.");
-                choice = GetPlayerChoice(2);
+                Console.WriteLine("\nHello, I am the elder sea lion. How may I help you?");
+                Console.WriteLine("1. Do you know anything about the orange Fintastic pearl?");
+                Console.WriteLine("2. Eh, I don't feel like talking to you right now.");
+                int choice = GetPlayerChoice(2);
 
                 if (choice == 1)
                 {
-                    Console.WriteLine("\nThank you! You can find my baby nearby. Please rescue them!");
-                    babySeaLion.SeaLionBabyDialogue(game); // Trigger the baby sea lion dialogue
+                    if (this.MissionStatus == 0) // Mission not started
+                    {
+                        Console.WriteLine("\nMy friend, the sea horse, is stuck in some nets! Please help rescue them.");
+                        Console.WriteLine("1. I will help.");
+                        Console.WriteLine("2. Sorry, I can't help right now.");
+                        choice = GetPlayerChoice(2);
+
+                        if (choice == 1)
+                        {
+                            Console.WriteLine("\nThank you! You can find my friend nearby. Please rescue them!");
+                            game.npcs.First(npc => npc.name == "Sea Horse").StartDialogue(game); // Trigger the sea horse dialogue
+                        }
+                        else
+                        {
+                            Console.WriteLine("\nI understand. Please come back if you change your mind.");
+                        }
+                    }
+                    else if (this.MissionStatus == 1) // Mission complete
+                    {
+                        Console.WriteLine("\nThank you for saving my friend! As a reward, here is the orange Fintastic pearl.");
+                        game.items.Add(new Item("Orange Pearl", "Fintastic Pearl", 15, 15, this.RoomNumber, "🟠"));
+                        this.MissionStatus = 2; // Mark mission as complete
+                        Console.WriteLine("Mission complete!");
+                        break;
+                    }
                 }
-                else
+                else if (choice == 2)
                 {
-                    Console.WriteLine("\nI understand. Please come back if you change your mind.");
-                }
-            }
-            else if (babySeaLion.MissionStatus == 1) // Baby sea lion mission complete
-            {
-                Console.WriteLine("\nThank you for saving my baby! As a reward, here is the orange Fintastic pearl.");
-                game.items.Add(new Item("Orange Pearl", "Fintastic Pearl", 15, 15, this.RoomNumber, "🟠"));
-                this.MissionStatus = 1; // Mark elder sea lion's mission as complete
-                Console.WriteLine("Mission complete!");
-                break;
-            }
-        }
-        else if (choice == 2)
-        {
-            Console.WriteLine("\nGoodbye then!");
-            break;
-        }
-    }
-}
-
-
-    
-
-    private void SeaLionBabyDialogue(Game game)
-{
-    while (true)
-    {
-        Console.WriteLine("\nHey there, stranger, please help me. I am stuck in these nets!");
-        Console.WriteLine("1. How did that happen?");
-        Console.WriteLine("2. Meh, I'm too old for this.");
-        int choice = GetPlayerChoice(2);
-
-        if (choice == 1)
-        {
-            Console.WriteLine("\nWell, I saw this beautifully shaped pebble and tried to come closer to see it. The nets, they got me!!!");
-            Console.WriteLine("1. I'll help you.");
-            Console.WriteLine("2. This is a waste of time, I'll try to figure this out on my own.");
-            choice = GetPlayerChoice(2);
-
-            if (choice == 1)
-            {
-                if (game.inventory.HasItem("Scissors"))
-                {
-                    Console.WriteLine("\nYou use the scissors to cut the nets and free the baby sea lion!");
-                    Console.WriteLine("The baby sea lion swims away happily.");
-                    this.MissionStatus = 1; 
-                    Console.WriteLine("You should return to the elder sea lion.");
+                    Console.WriteLine("\nGoodbye then!");
                     break;
                 }
-                else
+                ConsoleUtils.ClearConsole();
+                game.screen.Display();
+            }
+        }
+
+        private void SeaHorseDialogue(Game game)
+        {
+            while (true)
+            {
+                Console.WriteLine("\nHey there, stranger, please help me. I am stuck in these nets!");
+                Console.WriteLine("1. How did that happen?");
+                Console.WriteLine("2. Meh, I'm too old for this.");
+                int choice = GetPlayerChoice(2);
+
+                if (choice == 1)
                 {
-                    Console.WriteLine("\nYou don't have the scissors needed to free the baby sea lion.");
+                    Console.WriteLine("\nWell, I saw this beautifully shaped pebble and tried to come closer to see it. The nets, they got me!!!");
+                    Console.WriteLine("1. I'll help you.");
+                    Console.WriteLine("2. This is a waste of time, I'll try to figure this out on my own.");
+                    choice = GetPlayerChoice(2);
+
+                    if (choice == 1)
+                    {
+                        if (game.inventory.HasItem("Scissors"))
+                        {
+                            Console.WriteLine("\nYou use the scissors to cut the nets and free the sea horse!");
+                            Console.WriteLine("The sea horse swims away happily.");
+                            this.MissionStatus = 1;
+                            Console.WriteLine("You should return to the elder sea lion.");
+                            break;
+                        }
+                        else
+                        {
+                            Console.WriteLine("\nYou don't have the scissors needed to free the sea horse.");
+                            break;
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("\nI've lost all hope. Goodbye!");
+                        break;
+                    }
+                }
+                else if (choice == 2)
+                {
+                    Console.WriteLine("\nGoodbye then!");
                     break;
                 }
-            }
-            else
-            {
-                Console.WriteLine("\nI've lost all hope. Goodbye!");
-                break;
+                ConsoleUtils.ClearConsole();
+                game.screen.Display();
             }
         }
-        else if (choice == 2)
-        {
-            Console.WriteLine("\nGoodbye then!");
-            break;
-        }
-    }
-}
 
         private void TurtleDialogue(Game game)
         {

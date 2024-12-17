@@ -6,7 +6,7 @@ namespace WorldOfZuul
 
     public class Game
     {
-        private List<Room> rooms;
+        public List<Room> rooms {get; private set;}
         public List<Edge> edges { get; private set; }
         public List<Item> items { get; private set; }
         private RoomArt roomArt;
@@ -65,14 +65,14 @@ namespace WorldOfZuul
 
         private void CreateItems(){
             items.Add(new Item(name:"Hamburger", description:"Mhmm burger.", x: 15, y: 15, roomNumber: 9, symbol: "🍔"));
-            items.Add(new Item(name:"Scissors", description:"Might have a useful use.", x: 22, y: 20, roomNumber: 3, symbol: "✁"));       }
+            items.Add(new Item(name:"Scissors", description:"Might be useful.", x: 22, y: 20, roomNumber: 3, symbol: "✁"));       }
 
         private void InitializeNPCs()
         {
             npcs.Add(new NPC("Whale", 2));
             npcs.Add(new NPC("Octopus", 3));
             npcs.Add(new NPC("Sealion", 1));
-            npcs.Add(new NPC("SeaLionBaby", 1));
+            npcs.Add(new NPC("SeaHorse", 6));
             npcs.Add(new NPC("Turtle", 4));
             npcs.Add(new NPC("Dolphin", 5));
             npcs.Add(new NPC("Crab", 8));
@@ -91,6 +91,7 @@ namespace WorldOfZuul
                 }
             }
             possibleMoves.Add('q');
+            possibleMoves.Add('m');
             if(items.Where(item => item.RoomNumber == player.Position).ToList().FirstOrDefault() != null){
                 possibleMoves.Add('p');
             }

@@ -40,14 +40,14 @@ namespace WorldOfZuul
             ClearScreen();
             //Have precise control over where the content is placed
 
-            int roomStart = 6;
+            int roomStart = 3;
 
             SetContentAtPosition(roomArt, roomStart, 0);
             //This overwrites the top left of the room art
             SetContentAtPosition(title, roomStart+1, 6); //Adds 4 padding which is in all the other strings
 
-            SetContentAtPosition(inventory, 0, 0);
-            SetContentAtPosition(actionBar, 29, 0);
+            SetContentAtPosition(inventory, 0, 4);
+            SetContentAtPosition(actionBar, roomStart+23, 0);
 
             if(items.Count > 0){
                 foreach (Item item in items)

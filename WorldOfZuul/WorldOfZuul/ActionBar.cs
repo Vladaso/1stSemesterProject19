@@ -12,10 +12,10 @@ namespace WorldOfZuul
 
         private readonly string ActionBarArt = @"
     ┌                                                                                    ┐
-    │ > Where do you want to go?                                                 [map]   │
+    │ > Where do you want to go?                                              (m)[map]   │
     │                                                                                    │
     │                                                                                    │
-    │                                                                                    │
+    │                                                                        (q) [quit]  │
     └────────────────────────────────────────────────────────────────────────────────────┘
     ";
 
@@ -25,12 +25,21 @@ namespace WorldOfZuul
         /// <param name="possibleMoves">The list of possible moves.</param>
         public ActionBar(char[] possibleMoves)
         {
-            string[] directions = possibleMoves.Select(Utils.CharToDirection).ToArray();
-            //Adds the command for the player to the directions
-            for(int i = 0; i < directions.Length; i++){
-                directions[i] = directions[i] + "(" +possibleMoves[i] + ")";
+            List<string> directions = possibleMoves.Select(Utils.CharToDirection).ToList();
+
+            for (int i = directions.Count - 1; i >= 0; i--)
+            {
+                if (directions[i].Length > 1)
+                {
+                    directions[i] = directions[i] + "(" + possibleMoves[i] + ")";
+                }
+                else
+                {
+                    directions.RemoveAt(i);
+                }
             }
-            PossibleMoves = directions ?? throw new ArgumentNullException(nameof(directions));
+
+            PossibleMoves = directions.ToArray() ?? throw new ArgumentNullException(nameof(directions));
         }
 
         /// <summary>
