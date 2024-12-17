@@ -2,49 +2,38 @@ namespace WorldOfZuul
 {
     public class PollutionMeter
     {
-        private int PollutionLevel;
-        private string PollutionArt = @"     Pollution: [                         ] ";
-        private char Symbol =  '█';
-        private int IncreaseAmount = 4;
-        
+        public double PollutionLevel;
+        private const int MaxPollutionLevel = 100;
+        private const int BarLength = 25;
+        private string PollutionArt = "     Pollution: [                         ] ";
+        private char Symbol = '█';
+        public double IncreaseAmount = 1;
+
         public PollutionMeter()
         {
             PollutionLevel = 0;
             Draw();
-        } 
+        }
 
         public void Draw()
         {
             Update();
             Console.Write(PollutionArt);
-            Console.WriteLine(PollutionLevel + "%");
+            Console.WriteLine((int)PollutionLevel + "%");
         }
 
         private void Update()
         {
-            int start = PollutionArt.IndexOf("[") + 1;
-            int end = start + PollutionLevel / 4;
-            for (int i = start; i < end; i++)
-            {
-                PollutionArt = PollutionArt.Remove(i, 1);
-                PollutionArt = PollutionArt.Insert(i, Symbol.ToString());
-
-            }
+            int filledLength =(int) (PollutionLevel * BarLength) / MaxPollutionLevel;
+            string bar = new string(Symbol, filledLength).PadRight(BarLength, ' ');
+            PollutionArt = $"     Pollution: [{bar}] ";
         }
 
-        public Boolean IncreasePollution()
+        public bool IncreasePollution()
         {
-            PollutionLevel += IncreaseAmount;
-            if (PollutionLevel == 100)
-            {
-                PollutionArt = @"     Pollution: [                         ] ";
-                PollutionLevel = 0;
-                Draw();
-                return true;
-            }
+            PollutionLevel = Math.Min(PollutionLevel + IncreaseAmount, MaxPollutionLevel);
             Draw();
-            return false;
+            return PollutionLevel == MaxPollutionLevel;
         }
-
     }
 }

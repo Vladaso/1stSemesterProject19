@@ -16,7 +16,8 @@ public class Inventory{
     public void AddItem(Item item)
     {
         items.Add(item);
-        Console.WriteLine($"{item.Symbol} added to your inventory.");
+        Console.WriteLine($"{item.Symbol} - {item.Name} added to your inventory.");
+        Console.WriteLine($"{item.Description}");
     }
 
 public string ShowInventory()

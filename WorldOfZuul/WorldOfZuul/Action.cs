@@ -1,3 +1,5 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace WorldOfZuul
 {
     public class Action
@@ -20,8 +22,9 @@ namespace WorldOfZuul
             }
             else if(command == 'p'){
                 Item p = game.items.Where(item => item.RoomNumber == game.player.Position).ToList().FirstOrDefault()!;
-                game.inventory.AddItem(p); //Ignore warning is never null if p is a possible move
+                game.inventory.AddItem(p);
                 game.items.Remove(p);
+                ExecuteHiddenEffects(p);
                 Console.WriteLine("Press ENTER to continue");
                 Console.ReadLine();
             }
@@ -61,6 +64,18 @@ namespace WorldOfZuul
                     game.player.Position = edge.con2end;
                     return;
                 }
+            }
+        }
+
+        private void ExecuteHiddenEffects(Item p){
+            if(p.Name == "Yellow Pearl"){
+                game.pollutionMeter.IncreaseAmount *= 0.8;
+            }
+            else if(p.Name == "Purple Pearl"){
+                game.pollutionMeter.IncreaseAmount *= 1.5;
+            }
+            else if(p.Name == "Blue Pearl"){
+                game.pollutionMeter.PollutionLevel = Math.Max(game.pollutionMeter.PollutionLevel - 20, 0);
             }
         }
     }

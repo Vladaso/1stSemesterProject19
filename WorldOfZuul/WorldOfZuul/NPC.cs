@@ -272,8 +272,9 @@ namespace WorldOfZuul
                         {
                             Console.WriteLine("\nThank you! You can find my friend nearby. Please rescue them!");
                             Console.WriteLine("1. OK");
-                            choice = GetPlayerChoice(1);
+                            GetPlayerChoice(1);
                             this.MissionStatus = 1; // Mark mission as started
+                            break;
                         }
                         else
                         {
@@ -425,6 +426,11 @@ namespace WorldOfZuul
                             break;
 
                         }
+                        else if(this.MissionStatus == 1){
+                            Console.WriteLine("\nYou found them! Bubble-tastic work! These berries saved our family. I can’t thank you enough—you’ve saved the day!");
+                            Console.WriteLine("1. I am happy to help!");
+                            GetPlayerChoice(1);
+                        }
                         else
                         {
                             game.inventory.items.RemoveAll(item => item.Name == "Bubble Berries");
@@ -472,23 +478,23 @@ private void DolphinDialogue(Game game)
 {
     while (true)
     {
-        Console.WriteLine("\n*crying* oh hey... I'm the dolphin... *sob*");
-        Console.WriteLine("\n1. What happened? Why are you crying?");
-        Console.WriteLine("2. oh... Sorry, bye");
-        int choice = GetPlayerChoice(2);
-
-        if (choice == 1)
+        if (this.MissionStatus == 0)
         {
-            Console.WriteLine("\nWell... *sob* You see, the coral reef is dying. And even though I'm a big mammal,");
-            Console.WriteLine("I'm really concerned about all my friends that rely on the reef to live. *sob*");
-            Console.WriteLine("\n1. What can I do to help?");
-            Console.WriteLine("2. Can You explain to me why the reefs are so important?");
-            Console.WriteLine("3. Sorry. I need to go.");
-            choice = GetPlayerChoice(3);
+            Console.WriteLine("\n*crying* oh hey... I'm the dolphin... *sob*");
+            Console.WriteLine("\n1. What happened? Why are you crying?");
+            Console.WriteLine("2. oh... Sorry, bye");
+            int choice = GetPlayerChoice(2);
 
             if (choice == 1)
             {
-                if (this.MissionStatus == 0)
+                Console.WriteLine("\nWell... *sob* You see, the coral reef is dying. And even though I'm a big mammal,");
+                Console.WriteLine("I'm really concerned about all my friends that rely on the reef to live. *sob*");
+                Console.WriteLine("\n1. What can I do to help?");
+                Console.WriteLine("2. Can You explain to me why the reefs are so important?");
+                Console.WriteLine("3. Sorry. I need to go.");
+                choice = GetPlayerChoice(3);
+
+                if (choice == 1)
                 {
                     Console.WriteLine("\nMy friend Tauri the Turtle mentioned that he needs something from the reef,");
                     Console.WriteLine("but I don't remember what it was, please find him and talk with him!");
@@ -499,77 +505,92 @@ private void DolphinDialogue(Game game)
 
                     if (choice == 1)
                     {
-                        Console.WriteLine("\nOh thank you so much! Here, I have a gift for You!");
-                        game.items.Add(new Item(name:"Blue Pearl", description:"Fintastic Pearl", x: 76, y: 18, roomNumber: this.RoomNumber, symbol: "🔵"));
+                        Console.WriteLine("\nOh thank you so much! Please hurry!");
                         this.MissionStatus = 1;
-                        Console.WriteLine("\n1. Thank you! Bye!");
+                        Console.WriteLine("\n1. You're welcome! Bye!");
                         GetPlayerChoice(1);
                         break;
                     }
-
-
                     else if (choice == 2)
                     {
-                        // source = https://www.uq.edu.au/news/article/2015/09/world%E2%80%99s-turtles-face-plastic-deluge-danger
                         Console.WriteLine("\nHis kids ate plastic because they mistook it for a jellyfish!");
                         Console.WriteLine("It's, a problem that's spreading, approximately 52% of turtles worldwide, have eaten plastic!");
                         Console.WriteLine("\n1. Oh no!");
                         GetPlayerChoice(1);
                     }
-
                     else if (choice == 3)
                     {
                         Console.WriteLine("\nOh... Ok, bye!");
                         break;
                     }
-
                 }
-                else
+                else if (choice == 2)
                 {
-                    Console.WriteLine("\nMy friend Tauri the Turtle mentioned that he needs something from the reef,");
-                    Console.WriteLine("but I don't remember what it was, please find him and talk with him!");
-                    Console.WriteLine("\n1. Why does he need something from the reef?");
-                    Console.WriteLine("2. Goodbye.");
-                    choice = GetPlayerChoice(2);
-
-                    if (choice == 1)
-                    {
-                        Console.WriteLine("\nHis kids ate plastic because they mistook it for a jellyfish!");
-                        Console.WriteLine("It's, a problem that's spreading, approximately 52% of turtles worldwide, have eaten plastic!");
-                        Console.WriteLine("\n1. Oh no!");
-                        GetPlayerChoice(1);
-                    }
-
-                    else if (choice == 2)
-                    {
-                        Console.WriteLine("\nOh... Ok, bye!");
-                        break;
-                    }
-
+                    Console.WriteLine("\nWell, around 25% of all aquatic life is dependant on them at some point in their life!");
+                    Console.WriteLine("\nThey provide habitat, spawning and nursery grounds for over 1 million species!");
+                    Console.WriteLine("1. Wow thank You for this information!");
+                    GetPlayerChoice(1);
                 }
-
-                
+                else if (choice == 3)
+                {
+                    Console.WriteLine("\nOh... Goodbye...");
+                    break;
+                }
             }
-
-            else if (choice == 2)
+            else
             {
-                // source = https://www.epa.gov/coral-reefs/basic-information-about-coral-reefs
-                Console.WriteLine("\nWell, around 25% of all aquatic life is dependant on them at some point in their life!");
-                Console.WriteLine("\nThey provide habitat, spawning and nursery grounds for over 1 million species!");
-                Console.WriteLine("1. Wow thank You for this information!");
-                GetPlayerChoice(1);
-            }
-
-            else if (choice == 3)
-            {
-                Console.WriteLine("\nOh... Goodbye...");
+                Console.WriteLine("\n Noo, please stay, we all could use Your help!");
                 break;
             }
         }
-        else
+        else if (this.MissionStatus == 1 || this.MissionStatus == 2)
         {
-            Console.WriteLine("\n Noo, please stay, we all could use Your help!");
-            break;
+            Console.WriteLine("\nHey, it's you again! Thank you for helping me earlier.");
+            Console.WriteLine("\n1. Can you use your sonar to call for help?");
+            Console.WriteLine("2. Goodbye.");
+            int choice = GetPlayerChoice(2);
+
+            if (choice == 1)
+            {
+                Console.WriteLine("\nWho should I call?");
+                Console.WriteLine("\n1. Call humans for help.");
+                Console.WriteLine("2. Call the mantis shrimp for help.");
+                choice = GetPlayerChoice(2);
+
+                if (choice == 1)
+                {
+                    Console.WriteLine("\nYou call for humans. You wait for a bit.");
+                    Console.WriteLine("\n.");
+                    Console.WriteLine("\n..");
+                    Console.WriteLine("\n...");
+                    Console.WriteLine("\nThere is no response.");
+                    for (int i = 0; i < 10; i++)
+                    {
+                        game.pollutionMeter.IncreasePollution();
+                    }
+                    Console.WriteLine("\n1. Try calling someone else.");
+                    GetPlayerChoice(1);
+                }
+                else if (choice == 2)
+                {
+                    Console.WriteLine("\nYou call the mantis shrimp using the dolphin's sonar. The mantis shrimp brings you the blue pearl.");
+                    if(this.MissionStatus==1){
+                    game.items.Add(new Item(name: "Blue Pearl", description: "Fintastic Pearl", x: 76, y: 18, roomNumber: this.RoomNumber, symbol: "🔵"));
+                    }
+                    else{
+                        Console.WriteLine("\nYou already have the blue pearl.");
+                    }
+                    this.MissionStatus = 2;
+                    Console.WriteLine("\n1. Thank you!");
+                    GetPlayerChoice(1);
+                    break;
+                }
+            }
+            else if (choice == 2)
+            {
+                Console.WriteLine("\nGoodbye!");
+                break;
+            }
         }
 
         ConsoleUtils.ClearConsole();

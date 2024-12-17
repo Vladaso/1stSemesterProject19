@@ -19,6 +19,7 @@ namespace WorldOfZuul
         public Screen screen = new Screen(37, 90); //Height, Width
 
         public Boolean continuePlaying = true;
+        public PollutionMeter pollutionMeter = new PollutionMeter();
 
         public Game()
         {
@@ -106,7 +107,6 @@ namespace WorldOfZuul
 
         public void Play()
         {
-            PollutionMeter pollutionMeter = new PollutionMeter();
             Quizer quizer = new Quizer();
 
             while (continuePlaying)
