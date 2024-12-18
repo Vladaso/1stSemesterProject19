@@ -12,10 +12,10 @@ namespace WorldOfZuul
 
         private readonly string ActionBarArt = @"
     ┌                                                                                    ┐
-    │ > Where do you want to go?                                              (m)[map]   │
+    │ > Where do you want to go?                                     [quit](q)  [map](m) │
     │                                                                                    │
     │                                                                                    │
-    │                                                                        (q) [quit]  │
+    │                                                                                    │
     └────────────────────────────────────────────────────────────────────────────────────┘
     ";
 
@@ -31,7 +31,7 @@ namespace WorldOfZuul
             {
                 if (directions[i].Length > 1)
                 {
-                    directions[i] = directions[i] + "(" + possibleMoves[i] + ")";
+                    directions[i] = directions[i] + "(" + char.ToUpper(possibleMoves[i]) + ")";
                 }
                 else
                 {
@@ -70,7 +70,7 @@ private string BuildDisplay()
     }
     movesLine = movesLine.PadRight(barWidth-padding);
 
-    int movesRowIndex = 3;
+    int movesRowIndex = 4;
     if (movesRowIndex < display.Count - 2)
     {
         display[movesRowIndex] = $"{new string(' ', padding)}│{movesLine}│";
