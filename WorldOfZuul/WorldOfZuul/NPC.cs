@@ -426,11 +426,6 @@ namespace WorldOfZuul
                             break;
 
                         }
-                        else if(this.MissionStatus == 1){
-                            Console.WriteLine("\nYou found them! Bubble-tastic work! These berries saved our family. I can’t thank you enough—you’ve saved the day!");
-                            Console.WriteLine("1. I am happy to help!");
-                            GetPlayerChoice(1);
-                        }
                         else
                         {
                             game.inventory.items.RemoveAll(item => item.Name == "Bubble Berries");
@@ -440,10 +435,8 @@ namespace WorldOfZuul
                             this.MissionStatus = 1;
                             Console.WriteLine("\nMission complete!");
                             Console.WriteLine("1. I am happy to help!");
-
                             int choice_2 = GetPlayerChoice(1);
                             break;
-
                         }
                     }
                     else if (choice == 3)

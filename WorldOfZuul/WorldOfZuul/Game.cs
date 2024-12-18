@@ -41,7 +41,7 @@ namespace WorldOfZuul
             rooms.Add(new Room(1, "Sealion Room", "Placeholder"));
             rooms.Add(new Room(2, "Whale Room", "Placeholder"));
             rooms.Add(new Room(3, "Cave Room", "Placeholder"));
-            rooms.Add(new Room(4, "Bottle Room", "Placeholder"));
+            rooms.Add(new Room(4, "Reef Room", "Placeholder"));
             rooms.Add(new Room(5, "Broom Room", "Placeholder"));
             rooms.Add(new Room(6, "Diamond Room", "Placeholder"));
             rooms.Add(new Room(7, "Pyramid room", "Placeholder"));
@@ -59,7 +59,7 @@ namespace WorldOfZuul
             edges.Add(new Edge(8, 9, "south"));
             edges.Add(new Edge(1, 3, "east"));
             edges.Add(new Edge(3, 4, "south"));
-            edges.Add(new Edge(4, 5, "south"));
+            edges.Add(new Edge(4, 5, "north"));
             edges.Add(new Edge(5, 6, "west"));
             edges.Add(new Edge(5, 7, "east"));
 
