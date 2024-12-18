@@ -117,6 +117,8 @@ namespace WorldOfZuul
 
                 ActionBar actionBar = new ActionBar(possibleMoves);
 
+                pollutionMeter.Draw();
+
                 screen.SetScreenContent(rooms[player.Position].RoomName,
                 inventory.ShowInventory(), 
                 roomArt.Rooms[player.Position],
@@ -124,15 +126,19 @@ namespace WorldOfZuul
                 items.Where(item => item.RoomNumber == player.Position).ToList());
 
                 screen.Display();
-                pollutionMeter.Draw();
 
                 char input = parser.ReadAction(possibleMoves);
 
                 action.Execute(input);
                 if(pollutionMeter.IncreasePollution()){
-                    quizer.AskQuestion();
+                    continuePlaying = quizer.AskQuestion();
+                    if(continuePlaying)
+                    {
+                        pollutionMeter.PollutionLevel = 0;
+                    }
                 }
             }
+            action.Execute('q');
         }
 
     }
