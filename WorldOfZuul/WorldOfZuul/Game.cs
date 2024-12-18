@@ -59,7 +59,7 @@ namespace WorldOfZuul
             edges.Add(new Edge(8, 9, "south"));
             edges.Add(new Edge(1, 3, "east"));
             edges.Add(new Edge(3, 4, "south"));
-            edges.Add(new Edge(4, 5, "north"));
+            edges.Add(new Edge(4, 5, "south"));
             edges.Add(new Edge(5, 6, "west"));
             edges.Add(new Edge(5, 7, "east"));
 
