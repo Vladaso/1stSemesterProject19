@@ -684,7 +684,7 @@ private void CrabDialogue(Game game)
             }
 
             Console.WriteLine("\nI don't have much, but I found this Red Pearl while digging in the sand. It has a special power—take it as my thanks.");
-            game.items.Add(new Item(name: "Red Pearl", description: "This pearl gives you clairvoyance, use it to navigate yourself better.", x: 30, y: 20, roomNumber: this.RoomNumber, symbol: "🔴"));
+            game.items.Add(new Item(name: "Red Pearl", description: "This pearl gives you clairvoyance, use it to navigate yourself better.", x: 30, y: 17, roomNumber: this.RoomNumber, symbol: "🔴"));
             this.MissionStatus = 3;
             Console.WriteLine("\nYou've received the **Red Pearl**! Its power reveals hidden map in your journey.");
 

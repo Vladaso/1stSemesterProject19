@@ -137,7 +137,7 @@ namespace WorldOfZuul
 │          |___|         │                                │       o         |___|    │
 │                  o     │   You are a fish mayor of the  │                          │
 │                        │   last surviving underwater    │      /_|   o             │
-│                        │    civilisation Finlandia.     │     ('_)<|               │
+│                        │    civilisation, Finlandia.    │     ('_)<|               │
 │                        │                                │      \_|                 │
 │                     o  │  Just NOW the filtering system │                          │
 │                 o      │           broke down!          │              mmm         │
