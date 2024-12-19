@@ -1,5 +1,4 @@
-﻿using System.Data.Common;
-using System.Linq;
+﻿using System.Diagnostics;
 
 namespace WorldOfZuul
 {
@@ -20,6 +19,13 @@ namespace WorldOfZuul
 
         public Boolean continuePlaying = true;
         public PollutionMeter pollutionMeter = new PollutionMeter();
+
+        // HERE we store a bunch of data about the playthrough, that will be displayed on victory.
+        public int questionsAsked = 0;
+        public int questionsCorrect = 0;
+        public List<string> question_sources = new List<string>();
+        int movesMade = 0;
+        Stopwatch stopwatch = new Stopwatch();
 
         public Game()
         {
@@ -107,8 +113,8 @@ namespace WorldOfZuul
 
         public void Play()
         {
-            Quizer quizer = new Quizer();
-
+            Quizer quizer = new Quizer(game: this);
+            stopwatch.Start();
             while (continuePlaying)
             {
                 ConsoleUtils.ClearConsole();
@@ -132,8 +138,53 @@ namespace WorldOfZuul
                 if(pollutionMeter.IncreasePollution()){
                     quizer.AskQuestion();
                 }
+                if(pollutionMeter.PollutionLevel >= 100){
+                                ConsoleUtils.ClearConsole();
+            Console.WriteLine(@"
+    ┌────────────────────────────────────────────────────────────────────────────────────┐
+    │                            )                                                       │
+    │                         ( /(               As fish mayor, you failed to repair     │
+    │\ )      )    )     (    )\())  )     (  (      Finlandia's filtration system.      │
+    │)/(   ( /(   (     ))\  ((_)\  /((   ))\ )(                                         │
+    │(_))_ )(_))  )\  '/((_)   ((_)(_))\ /((_|()\ Microplastics now choke the waters,    │
+    │)) __((_)_ _((_))(_))    / _ \_)((_|_))  ((_)      poisoning your home.             │
+    │| (_ / _` | '  \() -_)  | (_) \ V // -_)| '_|                                       │
+    │ \___\__,_|_|_|_|\___|   \___/ \_/ \___||_|   Your children are born stunted,       │
+    │                                                  weaker than ever before.          │
+    │                                                                                    │
+    │                                             Their children struggle even more,     │
+    │                                                as marine life disappears.          │
+    │                                                                                    │
+    │        |\    \ \ \ \ \ \ \      __              You watch from your perch,         │
+    │        |  \    \ \ \ \ \ \ \   | O~-_            untouched by the ruin.            │
+    │        |   >----|-|-|-|-|-|-|--|  __/                                              │
+    │        |  /    / / / / / / /   |__\         It doesn't affect you directly—        │
+    │        |/     / / / / / / /                      but does it feel good?            │
+    │                                                                                    │
+    │                                                   You failed Finlandia.            │
+    │                                                    You failed them all.            │
+    │                                                                                    │
+    └────────────────────────────────────────────────────────────────────────────────────┘
+            ");
+                    continuePlaying = false;
+                }
+                movesMade++;
+            }
+            stopwatch.Stop();
+            Console.WriteLine("You have completed the game!");
+            Console.WriteLine($"You were asked {questionsAsked} questions, and answered {questionsCorrect} correctly.");
+            Console.WriteLine($"You took {stopwatch.Elapsed.Minutes} minutes and {stopwatch.Elapsed.Seconds} seconds to complete the game.");
+            Console.WriteLine($"You made {movesMade} moves.");
+            Console.WriteLine($"You ended with {(int) pollutionMeter.PollutionLevel}% pollution.");
+            Console.WriteLine("Please share your score so you can be added to the leaderboard.");
+            if(question_sources.Count > 0)
+            {
+            Console.WriteLine("Check out these sources for questions you got wrong:");
+            foreach (string source in question_sources)
+            {
+                Console.WriteLine(source);
+            }
             }
         }
-
     }
 }

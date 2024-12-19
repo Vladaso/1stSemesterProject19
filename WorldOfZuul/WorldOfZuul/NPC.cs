@@ -132,7 +132,7 @@ namespace WorldOfZuul
                         Console.WriteLine("\nThe purple Fintastic pearl is in the pyramid room powering the filtering system. Be careful when taking it out.");
                         if (this.MissionStatus == 0)
                         {
-                            game.items.Add(new Item(name: "Purple Pearl", description: "Fintastic Pearl", x: 21, y: 6, roomNumber: 7, symbol: "🟣"));
+                            game.items.Add(new Item(name: "Purple Pearl", description: "You feel it radiating with power.", x: 21, y: 6, roomNumber: 7, symbol: "🟣"));
                             this.MissionStatus = 1;
                         }
                         Console.WriteLine("\n1. Thank you for the information.");
@@ -211,7 +211,7 @@ namespace WorldOfZuul
                                 Console.WriteLine("\nHmph. You're right... It is 40:1. Terrible, isn't it?");
                                 Console.WriteLine("\nWell, since you actually know something, I'll tell you a secret: The orange Fintastic pearl has a special power.");
                                 Console.WriteLine("\nAnd here it is btw, it's all yours.");
-                                game.items.Add(new Item(name: "Orange Pearl", description: "Fintastic Pearl", x: 15, y: 15, roomNumber: this.RoomNumber, symbol: "🟠"));
+                                game.items.Add(new Item(name: "Orange Pearl", description: "Has a secret power you're not quite sure what it is though.", x: 15, y: 15, roomNumber: this.RoomNumber, symbol: "🟠"));
                                 Console.WriteLine("Now go away, I'm tired.");
                                 this.MissionStatus = 1;
                             }
@@ -262,6 +262,7 @@ namespace WorldOfZuul
                     if (this.MissionStatus == 0) // Mission not started
                     {
                             Console.WriteLine("\nWhy of course I do, I own the Yellow Fintastic pearl.");
+                            Console.WriteLine("\nIt is the reason why this garden is so pretty, it keeps the pollution away.");
                             Console.WriteLine("\nI will give it to you I just need a small favor from you.");
                         Console.WriteLine("\nMy friend, the sea horse, is stuck in some nets! Please help rescue them.");
                         Console.WriteLine("1. I will help.");
@@ -288,8 +289,9 @@ namespace WorldOfZuul
                     }
                     else if (this.MissionStatus == 2) // Mission complete
                     {
+                        Console.WriteLine("\nIndeed I do!");
                         Console.WriteLine("\nThank you for saving my friend! As a reward, here is the yellow Fintastic pearl.");
-                        game.items.Add(new Item("Yellow Pearl", "Fintastic Pearl", 15, 15, this.RoomNumber, "🟡"));
+                        game.items.Add(new Item("Yellow Pearl", "As you pick it up you feel its warding energy against plastic.", 35, 13, this.RoomNumber, "🟡"));
                         this.MissionStatus = 3;
                         Console.WriteLine("\n1. Thank you!");
                         GetPlayerChoice(1);
@@ -401,7 +403,7 @@ namespace WorldOfZuul
                         {
                             Console.WriteLine("\nMy kids need Bubble Berries to cleanse their tummies! They’re tiny, purple glowing berries that float near the reefs.");
                             Console.WriteLine("Hurry up! My kids are in danger!");
-                            game.items.Add(new Item(name: "Bubble Berries", description: "Healing Bubble", x: 22, y: 4, roomNumber: 5, symbol: "🫧"));
+                            game.items.Add(new Item(name: "Bubble Berries", description: "Funny looking bubbles...", x: 22, y: 4, roomNumber: 9, symbol: "🫧"));
                             Console.WriteLine("\n1. I'll be be back soon with the Bubble Berries!");
                             int choice_11 = GetPlayerChoice(1);
                             break;
@@ -436,7 +438,7 @@ namespace WorldOfZuul
                             game.inventory.items.RemoveAll(item => item.Name == "Bubble Berries");
                             Console.WriteLine("\nYou found them! Bubble-tastic work! These berries saved our family. I can’t thank you enough—you’ve saved the day!");
                             Console.WriteLine("Here, take this Green Pearl as a token of my gratitude. You’ve got the heart of a true ocean hero!");
-                            game.items.Add(new Item("Green Pearl", "Fintastic Pearl", 30, 17, this.RoomNumber, "🟢"));
+                            game.items.Add(new Item("Green Pearl", "You feel refreshed when you touch it, could it have a special power?", 30, 17, this.RoomNumber, "🟢"));
                             this.MissionStatus = 1;
                             Console.WriteLine("\nMission complete!");
                             Console.WriteLine("1. I am happy to help!");
@@ -546,7 +548,7 @@ private void DolphinDialogue(Game game)
                 else if (choice == 2)
                 {
                     Console.WriteLine("\nYou call the mantis shrimp using the dolphin's sonar. The mantis shrimp brings you the blue pearl.");
-                    game.items.Add(new Item(name: "Blue Pearl", description: "Fintastic Pearl", x: 76, y: 18, roomNumber: this.RoomNumber, symbol: "🔵"));
+                    game.items.Add(new Item(name: "Blue Pearl", description: "As you pick it up the pollution around you gets reduced to bubbles.", x: 76, y: 18, roomNumber: this.RoomNumber, symbol: "🔵"));
                     this.MissionStatus = 3;
                     Console.WriteLine("\n1. Thank you!");
                     GetPlayerChoice(1);
@@ -592,7 +594,7 @@ private void DolphinDialogue(Game game)
                     Console.WriteLine("\nYou call the mantis shrimp using the dolphin's sonar. The mantis shrimp brings you the blue pearl.");
                     if (this.MissionStatus == 2)
                     {
-                        game.items.Add(new Item(name: "Blue Pearl", description: "Fintastic Pearl", x: 76, y: 18, roomNumber: this.RoomNumber, symbol: "🔵"));
+                        game.items.Add(new Item(name: "Blue Pearl", description: "As you pick it up the pollution around you gets reduced to bubbles.", x: 76, y: 18, roomNumber: this.RoomNumber, symbol: "🔵"));
                         this.MissionStatus = 3;
                     }
                     else
@@ -682,8 +684,8 @@ private void CrabDialogue(Game game)
             }
 
             Console.WriteLine("\nI don't have much, but I found this Red Pearl while digging in the sand. It has a special power—take it as my thanks.");
-            game.items.Add(new Item(name: "Red Pearl", description: "Fintastic Pearl", x: 15, y: 15, roomNumber: this.RoomNumber, symbol: "🔴"));
-            MissionStatus = 3;
+            game.items.Add(new Item(name: "Red Pearl", description: "This pearl gives you clairvoyance, use it to navigate yourself better.", x: 30, y: 20, roomNumber: this.RoomNumber, symbol: "🔴"));
+            this.MissionStatus = 3;
             Console.WriteLine("\nYou've received the **Red Pearl**! Its power reveals hidden map in your journey.");
 
             Console.WriteLine("\nPlease, remember to protect our ocean. If more people cared like you, maybe we wouldn't be drowning in human waste.");
@@ -852,6 +854,34 @@ private void PrincessDialogue(Game game)
                     Console.WriteLine("\nFinlandia is saved! Thank you for your help!");
                     Console.WriteLine("\n1. You're welcome!");
                     GetPlayerChoice(1);
+                    ConsoleUtils.ClearConsole();
+                    game.continuePlaying = false;
+                    Console.WriteLine(@"
+    ┌────────────────────────────────────────────────────────────────────────────────────┐
+    │          ^                 __ __  ____     __  ______   ___   ____   __ __  __     │
+    │         / \               |  |  ||    |   /  ]|      | /   \ |    \ |  |  ||  |    │
+    │    ^   _|.|_   ^          |  |  | |  |   /  / |      ||     ||  D  )|  |  ||  |    │
+    │  _|I|  |I .|  |.|_        |  |  | |  |  /  /  |_|  |_||  O  ||    / |  ~  ||__|    │
+    │  \II||~~| |~~||  /        |  :  | |  | /   \_   |  |  |     ||    \ |___, | __     │
+    │   ~\~|~~~~~~~|~/~          \   /  |  | \     |  |  |  |     ||  .  \|     ||  |    │
+    │     \|II I ..|/             \_/  |____| \____|  |__|   \___/ |__|\_||____/ |__|    │
+    │/\    |II.    |    /\                                                               │
+    │  \  _|III .  |_  /  \      ┌──────────────────────────────────────────────────┐    │
+    │-~| /(|I.I I  |)\ |~-|      │          You managed to save Finlandia!          │    │
+    │I | +-----------+ |. )\_    │                                                  │    │
+    │----/____-~-____\-----~/    │      Water can again be filtered for oxygen!     │    │
+    │.III|  /(===)\  |  .. |     │     Without massive ingestion of microplastics   │    │
+    │~~-----_________---~~~\     │                                                  │    │
+    │########!\-#####%!!!!!| |\  │          You haven't solved the problem          │    │
+    │#########!!\~~-_##%!!!\_/|  │     But you stopped it from getting any worse    │    │
+    │###########!!!!!/~~-_%!!!!\ │           that's as much as you could do.        │    │
+    │################!!!!!/~~--\_│                                                  │    │
+    │###################%%!!!!/ /│               Thank you for playing !            │    │
+    │____##############%%%!!!!\/ └──────────────────────────────────────────────────┘    │
+    │ \ \~-_###########%%%!!!!\                                                          │
+    │!!!!!!\~-_#######%%%!!!!!!\_                                                        │
+    └────────────────────────────────────────────────────────────────────────────────────┘
+                    ");
                     break;
                 }
                 else

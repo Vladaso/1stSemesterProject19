@@ -135,13 +135,13 @@ namespace WorldOfZuul
 │          |   |                                                            |   |    │
 │          |   |         ┌────────────────────────────────┐                 |   |    │
 │          |___|         │                                │       o         |___|    │
-│                  o     │                                │                          │
-│                        │   If you are ready, you can    │      /_|   o             │
-│                        │        start the game.         │     ('_)<|               │
+│                  o     │   You are a fish mayor of the  │                          │
+│                        │   last surviving underwater    │      /_|   o             │
+│                        │    civilisation Finlandia.     │     ('_)<|               │
 │                        │                                │      \_|                 │
-│                     o  │  Good luck on your adventure!  │                          │
-│                 o      │                                │              mmm         │
-│   mmm             /_|  │                                │              )-(         │
+│                     o  │  Just NOW the filtering system │                          │
+│                 o      │           broke down!          │              mmm         │
+│   mmm             /_|  │  Good luck on your adventure!  │              )-(         │
 │   )-(            ('_)<|│                                │             (   )        │
 │  (   )  o         \_|  └────────────────────────────────┘             |   |    o   │
 │  |   |                       [PRESS ENTER TO START]                   |   |        │

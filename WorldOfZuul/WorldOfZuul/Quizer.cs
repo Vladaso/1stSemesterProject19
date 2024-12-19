@@ -7,9 +7,12 @@ namespace WorldOfZuul {
         readonly List<Question> questions;
         readonly Random random;
 
-        public Quizer() {
+        private Game game;
+
+        public Quizer(Game game) {
             questions = new List<Question>();
             random = new Random();
+            this.game = game;
             InitializeQuestions();
         }
 
@@ -268,19 +271,49 @@ namespace WorldOfZuul {
         }
 
         public bool AskQuestion() {
+            Console.WriteLine(@"
+                          .
+                          A       ;
+                |   ,--,-/ \---,-/|  ,
+               _|\,'. /|      /|   `/|-.
+           \`.'    /|      ,            `;.
+          ,'\   A     A         A   A _ /| `.;
+        ,/  _              A       _  / _   /|  ;
+       /\  / \   ,  ,           A  /    /     `/|
+      /_| | _ \         ,     ,             ,/  \
+     // | |/ `.\  ,-      ,       ,   ,/ ,/      \/
+     / @| |@  / /'   \  \      ,              >  /|    ,--.
+    |\_/   \_/ /      |  |           ,  ,/        \  ./' __:..
+    |  __ __  |       |  | .--.  ,         >  >   |-'   /     `
+  ,/| /  '  \ |       |  |     \      ,           |    /
+ /  |<--.__,->|       |  | .    `.        >  >    /   (
+/_,' \\  ^  /  \     /  /   `.    >--            /^\   |
+      \\___/    \   /  /      \__'     \   \   \/   \  |
+       `.   |/          ,  ,                  /`\    \  )
+         \  '  |/    ,       V    \          /        `-\
+          `|/  '  V      V           \    \.'            \_
+           '`-.       V       V        \./'\
+               `|/-.      \ /   \ /,---`\         
+                /   `._____V__katV'
+            ");
+            Console.WriteLine("Hello sir, sorry to interrupt but we are calibrating the filtration system and need some help.\n");
+            Console.WriteLine("Please answer the following question to help us calibrate the system:\n");
             Question question = GetRandomQuestion();
             Console.WriteLine(question.DisplayQuestion());
             Console.Write("Enter your answer (number): ");
             string? answer = Console.ReadLine();
-
+            game.questionsAsked++;
             if (question.CheckAnswer(answer)) {
-                Console.WriteLine("Correct!");
-                Console.WriteLine("source: " + question.Source); // source is displayed when the player guesses the question correctly
+                game.questionsCorrect++;
+                Console.WriteLine("Something has changed...");
+                game.pollutionMeter.IncreaseAmount *= 0.95;
                 Console.WriteLine("Press Enter to continue");
                 Console.ReadLine();
                 return true;
             } else {
-                Console.WriteLine("Incorrect!");
+                Console.WriteLine("Something has changed...");
+                game.pollutionMeter.IncreaseAmount *= 1.05;
+                game.question_sources.Add(question.Source);
                 Console.WriteLine("Press Enter to continue");
                 Console.ReadLine();
                 return false;
