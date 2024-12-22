@@ -132,7 +132,7 @@ namespace WorldOfZuul
                         Console.WriteLine("\nThe purple Fintastic pearl is in the pyramid room powering the filtering system. Be careful when taking it out.");
                         if (this.MissionStatus == 0)
                         {
-                            game.items.Add(new Item(name: "Purple Pearl", description: "Fintastic Pearl", x: 21, y: 6, roomNumber: 7, symbol: "🟣"));
+                            game.items.Add(new Item(name: "Purple Pearl", description: "You feel it radiating with power.", x: 21, y: 6, roomNumber: 7, symbol: "🟣"));
                             this.MissionStatus = 1;
                         }
                         Console.WriteLine("\n1. Thank you for the information.");
@@ -211,7 +211,7 @@ namespace WorldOfZuul
                                 Console.WriteLine("\nHmph. You're right... It is 40:1. Terrible, isn't it?");
                                 Console.WriteLine("\nWell, since you actually know something, I'll tell you a secret: The orange Fintastic pearl has a special power.");
                                 Console.WriteLine("\nAnd here it is btw, it's all yours.");
-                                game.items.Add(new Item(name: "Orange Pearl", description: "Fintastic Pearl", x: 15, y: 15, roomNumber: this.RoomNumber, symbol: "🟠"));
+                                game.items.Add(new Item(name: "Orange Pearl", description: "Has a secret power you're not quite sure what it is though.", x: 15, y: 15, roomNumber: this.RoomNumber, symbol: "🟠"));
                                 Console.WriteLine("Now go away, I'm tired.");
                                 this.MissionStatus = 1;
                             }
@@ -262,6 +262,7 @@ namespace WorldOfZuul
                     if (this.MissionStatus == 0) // Mission not started
                     {
                             Console.WriteLine("\nWhy of course I do, I own the Yellow Fintastic pearl.");
+                            Console.WriteLine("\nIt is the reason why this garden is so pretty, it keeps the pollution away.");
                             Console.WriteLine("\nI will give it to you I just need a small favor from you.");
                         Console.WriteLine("\nMy friend, the sea horse, is stuck in some nets! Please help rescue them.");
                         Console.WriteLine("1. I will help.");
@@ -288,8 +289,9 @@ namespace WorldOfZuul
                     }
                     else if (this.MissionStatus == 2) // Mission complete
                     {
+                        Console.WriteLine("\nIndeed I do!");
                         Console.WriteLine("\nThank you for saving my friend! As a reward, here is the yellow Fintastic pearl.");
-                        game.items.Add(new Item("Yellow Pearl", "Fintastic Pearl", 15, 15, this.RoomNumber, "🟡"));
+                        game.items.Add(new Item("Yellow Pearl", "As you pick it up you feel its warding energy against plastic.", 35, 13, this.RoomNumber, "🟡"));
                         this.MissionStatus = 3;
                         Console.WriteLine("\n1. Thank you!");
                         GetPlayerChoice(1);
@@ -401,7 +403,7 @@ namespace WorldOfZuul
                         {
                             Console.WriteLine("\nMy kids need Bubble Berries to cleanse their tummies! They’re tiny, purple glowing berries that float near the reefs.");
                             Console.WriteLine("Hurry up! My kids are in danger!");
-                            game.items.Add(new Item(name: "Bubble Berries", description: "Healing Bubble", x: 22, y: 4, roomNumber: 5, symbol: "🫧"));
+                            game.items.Add(new Item(name: "Bubble Berries", description: "Funny looking bubbles...", x: 22, y: 4, roomNumber: 9, symbol: "🫧"));
                             Console.WriteLine("\n1. I'll be be back soon with the Bubble Berries!");
                             int choice_11 = GetPlayerChoice(1);
                             break;
@@ -431,7 +433,7 @@ namespace WorldOfZuul
                             game.inventory.items.RemoveAll(item => item.Name == "Bubble Berries");
                             Console.WriteLine("\nYou found them! Bubble-tastic work! These berries saved our family. I can’t thank you enough—you’ve saved the day!");
                             Console.WriteLine("Here, take this Green Pearl as a token of my gratitude. You’ve got the heart of a true ocean hero!");
-                            game.items.Add(new Item("Green Pearl", "Fintastic Pearl", 30, 17, this.RoomNumber, "🟢"));
+                            game.items.Add(new Item("Green Pearl", "You feel refreshed when you touch it, could it have a special power?", 30, 17, this.RoomNumber, "🟢"));
                             this.MissionStatus = 1;
                             Console.WriteLine("\nMission complete!");
                             Console.WriteLine("1. I am happy to help!");
@@ -480,53 +482,22 @@ private void DolphinDialogue(Game game)
 
             if (choice == 1)
             {
-                Console.WriteLine("\nWell... *sob* You see, the coral reef is dying. And even though I'm a big mammal,");
-                Console.WriteLine("I'm really concerned about all my friends that rely on the reef to live. *sob*");
-                Console.WriteLine("\n1. What can I do to help?");
-                Console.WriteLine("2. Can You explain to me why the reefs are so important?");
-                Console.WriteLine("3. Sorry. I need to go.");
-                choice = GetPlayerChoice(3);
+                Console.WriteLine("\n*sob* The coral reef is dying... I need help from Tauri the Turtle... *sob*");
+                Console.WriteLine("\n1. I'll go talk to Tauri the Turtle.");
+                Console.WriteLine("2. Sorry, I can't help right now.");
+                choice = GetPlayerChoice(2);
 
                 if (choice == 1)
                 {
-                    Console.WriteLine("\nMy friend Tauri the Turtle mentioned that he needs something from the reef,");
-                    Console.WriteLine("but I don't remember what it was, please find him and talk with him!");
-                    Console.WriteLine("\n1. OK! I'll go talk to him right now!");
-                    Console.WriteLine("2. Why does he need something from the reef?");
-                    Console.WriteLine("3. I don't have the time now. Bye.");
-                    choice = GetPlayerChoice(3);
-
-                    if (choice == 1)
-                    {
-                        Console.WriteLine("\nOh thank you so much! Please hurry!");
-                        this.MissionStatus = 1;
-                        Console.WriteLine("\n1. You're welcome! Bye!");
-                        GetPlayerChoice(1);
-                        break;
-                    }
-                    else if (choice == 2)
-                    {
-                        Console.WriteLine("\nHis kids ate plastic because they mistook it for a jellyfish!");
-                        Console.WriteLine("It's, a problem that's spreading, approximately 52% of turtles worldwide, have eaten plastic!");
-                        Console.WriteLine("\n1. Oh no!");
-                        GetPlayerChoice(1);
-                    }
-                    else if (choice == 3)
-                    {
-                        Console.WriteLine("\nOh... Ok, bye!");
-                        break;
-                    }
+                    Console.WriteLine("\nThank you... *sob* Please hurry!");
+                    this.MissionStatus = 1;
+                    Console.WriteLine("\n1. You're welcome! Bye!");
+                    GetPlayerChoice(1);
+                    break;
                 }
                 else if (choice == 2)
                 {
-                    Console.WriteLine("\nWell, around 25% of all aquatic life is dependant on them at some point in their life!");
-                    Console.WriteLine("\nThey provide habitat, spawning and nursery grounds for over 1 million species!");
-                    Console.WriteLine("1. Wow thank You for this information!");
-                    GetPlayerChoice(1);
-                }
-                else if (choice == 3)
-                {
-                    Console.WriteLine("\nOh... Goodbye...");
+                    Console.WriteLine("\nOh... Ok, bye!");
                     break;
                 }
             }
@@ -536,7 +507,54 @@ private void DolphinDialogue(Game game)
                 break;
             }
         }
-        else if (this.MissionStatus == 1 || this.MissionStatus == 2)
+        else if (this.MissionStatus == 1 && game.inventory.HasItem("Green Pearl"))
+        {
+            Console.WriteLine("\nYou have the Green Pearl! Thank you so much! I can use it to cure the coral reef.");
+            Console.WriteLine("\nThe dolphin uses the Green Pearl to cure the coral reef. The reef is now healthy again.");
+            this.MissionStatus = 2;
+            Console.WriteLine("\nThank you so much can I help you with something?");
+            Console.WriteLine("\n1. Can you use your sonar to call for help?");
+            Console.WriteLine("2. Goodbye.");
+            int choice = GetPlayerChoice(2);
+
+            if (choice == 1)
+            {
+                Console.WriteLine("\nWho should I call?");
+                Console.WriteLine("\n1. Call humans for help.");
+                Console.WriteLine("2. Call the mantis shrimp for help.");
+                choice = GetPlayerChoice(2);
+
+                if (choice == 1)
+                {
+                    Console.WriteLine("\nYou call for humans. You wait for a bit.");
+                    Console.WriteLine("\n.");
+                    Console.WriteLine("\n..");
+                    Console.WriteLine("\n...");
+                    Console.WriteLine("\nThere is no response.");
+                    for (int i = 0; i < 10; i++)
+                    {
+                        game.pollutionMeter.IncreasePollution();
+                    }
+                    Console.WriteLine("\n1. Try calling someone else.");
+                    GetPlayerChoice(1);
+                }
+                else if (choice == 2)
+                {
+                    Console.WriteLine("\nYou call the mantis shrimp using the dolphin's sonar. The mantis shrimp brings you the blue pearl.");
+                    game.items.Add(new Item(name: "Blue Pearl", description: "As you pick it up the pollution around you gets reduced to bubbles.", x: 76, y: 18, roomNumber: this.RoomNumber, symbol: "🔵"));
+                    this.MissionStatus = 3;
+                    Console.WriteLine("\n1. Thank you!");
+                    GetPlayerChoice(1);
+                    break;
+                }
+            }
+            else if (choice == 2)
+            {
+                Console.WriteLine("\nGoodbye!");
+                break;
+            }
+        }
+        else if (this.MissionStatus == 2 || this.MissionStatus == 3)
         {
             Console.WriteLine("\nHey, it's you again! Thank you for helping me earlier.");
             Console.WriteLine("\n1. Can you use your sonar to call for help?");
@@ -567,13 +585,15 @@ private void DolphinDialogue(Game game)
                 else if (choice == 2)
                 {
                     Console.WriteLine("\nYou call the mantis shrimp using the dolphin's sonar. The mantis shrimp brings you the blue pearl.");
-                    if(this.MissionStatus==1){
-                    game.items.Add(new Item(name: "Blue Pearl", description: "Fintastic Pearl", x: 76, y: 18, roomNumber: this.RoomNumber, symbol: "🔵"));
+                    if (this.MissionStatus == 2)
+                    {
+                        game.items.Add(new Item(name: "Blue Pearl", description: "As you pick it up the pollution around you gets reduced to bubbles.", x: 76, y: 18, roomNumber: this.RoomNumber, symbol: "🔵"));
+                        this.MissionStatus = 3;
                     }
-                    else{
+                    else
+                    {
                         Console.WriteLine("\nYou already have the blue pearl.");
                     }
-                    this.MissionStatus = 2;
                     Console.WriteLine("\n1. Thank you!");
                     GetPlayerChoice(1);
                     break;
@@ -657,8 +677,8 @@ private void CrabDialogue(Game game)
             }
 
             Console.WriteLine("\nI don't have much, but I found this Red Pearl while digging in the sand. It has a special power—take it as my thanks.");
-            game.items.Add(new Item(name: "Red Pearl", description: "Fintastic Pearl", x: 15, y: 15, roomNumber: this.RoomNumber, symbol: "🔴"));
-            MissionStatus = 3;
+            game.items.Add(new Item(name: "Red Pearl", description: "This pearl gives you clairvoyance, use it to navigate yourself better.", x: 30, y: 17, roomNumber: this.RoomNumber, symbol: "🔴"));
+            this.MissionStatus = 3;
             Console.WriteLine("\nYou've received the **Red Pearl**! Its power reveals hidden map in your journey.");
 
             Console.WriteLine("\nPlease, remember to protect our ocean. If more people cared like you, maybe we wouldn't be drowning in human waste.");
@@ -827,6 +847,34 @@ private void PrincessDialogue(Game game)
                     Console.WriteLine("\nFinlandia is saved! Thank you for your help!");
                     Console.WriteLine("\n1. You're welcome!");
                     GetPlayerChoice(1);
+                    ConsoleUtils.ClearConsole();
+                    game.continuePlaying = false;
+                    Console.WriteLine(@"
+    ┌────────────────────────────────────────────────────────────────────────────────────┐
+    │          ^                 __ __  ____     __  ______   ___   ____   __ __  __     │
+    │         / \               |  |  ||    |   /  ]|      | /   \ |    \ |  |  ||  |    │
+    │    ^   _|.|_   ^          |  |  | |  |   /  / |      ||     ||  D  )|  |  ||  |    │
+    │  _|I|  |I .|  |.|_        |  |  | |  |  /  /  |_|  |_||  O  ||    / |  ~  ||__|    │
+    │  \II||~~| |~~||  /        |  :  | |  | /   \_   |  |  |     ||    \ |___, | __     │
+    │   ~\~|~~~~~~~|~/~          \   /  |  | \     |  |  |  |     ||  .  \|     ||  |    │
+    │     \|II I ..|/             \_/  |____| \____|  |__|   \___/ |__|\_||____/ |__|    │
+    │/\    |II.    |    /\                                                               │
+    │  \  _|III .  |_  /  \      ┌──────────────────────────────────────────────────┐    │
+    │-~| /(|I.I I  |)\ |~-|      │          You managed to save Finlandia!          │    │
+    │I | +-----------+ |. )\_    │                                                  │    │
+    │----/____-~-____\-----~/    │      Water can again be filtered for oxygen!     │    │
+    │.III|  /(===)\  |  .. |     │     Without massive ingestion of microplastics   │    │
+    │~~-----_________---~~~\     │                                                  │    │
+    │########!\-#####%!!!!!| |\  │          You haven't solved the problem          │    │
+    │#########!!\~~-_##%!!!\_/|  │     But you stopped it from getting any worse    │    │
+    │###########!!!!!/~~-_%!!!!\ │           that's as much as you could do.        │    │
+    │################!!!!!/~~--\_│                                                  │    │
+    │###################%%!!!!/ /│               Thank you for playing !            │    │
+    │____##############%%%!!!!\/ └──────────────────────────────────────────────────┘    │
+    │ \ \~-_###########%%%!!!!\                                                          │
+    │!!!!!!\~-_#######%%%!!!!!!\_                                                        │
+    └────────────────────────────────────────────────────────────────────────────────────┘
+                    ");
                     break;
                 }
                 else
