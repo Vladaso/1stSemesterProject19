@@ -68,14 +68,15 @@ namespace WorldOfZuul
         }
 
         private void ExecuteHiddenEffects(Item p){
+            double pollutionLevel = game.pollutionMeter.PollutionLevel;
             if(p.Name == "Yellow Pearl"){
-                game.pollutionMeter.IncreaseAmount *= 0.8;
+                game.pollutionMeter.IncreasePollution(pollutionLevel*0.8 - pollutionLevel);
             }
             else if(p.Name == "Purple Pearl"){
-                game.pollutionMeter.IncreaseAmount *= 1.5;
+                game.pollutionMeter.IncreasePollution(pollutionLevel*1.5 - pollutionLevel);
             }
             else if(p.Name == "Blue Pearl"){
-                game.pollutionMeter.PollutionLevel = Math.Max(game.pollutionMeter.PollutionLevel - 20, 0);
+                game.pollutionMeter.DecreasePollution(pollutionLevel*0.2);
             }
         }
     }

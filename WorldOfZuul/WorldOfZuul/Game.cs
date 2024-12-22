@@ -47,7 +47,7 @@ namespace WorldOfZuul
             rooms.Add(new Room(1, "Sealion Room", "Placeholder"));
             rooms.Add(new Room(2, "Whale Room", "Placeholder"));
             rooms.Add(new Room(3, "Cave Room", "Placeholder"));
-            rooms.Add(new Room(4, "Bottle Room", "Placeholder"));
+            rooms.Add(new Room(4, "Reef Room", "Placeholder"));
             rooms.Add(new Room(5, "Broom Room", "Placeholder"));
             rooms.Add(new Room(6, "Diamond Room", "Placeholder"));
             rooms.Add(new Room(7, "Pyramid room", "Placeholder"));
@@ -123,6 +123,8 @@ namespace WorldOfZuul
 
                 ActionBar actionBar = new ActionBar(possibleMoves);
 
+                pollutionMeter.Draw();
+
                 screen.SetScreenContent(rooms[player.Position].RoomName,
                 inventory.ShowInventory(), 
                 roomArt.Rooms[player.Position],
@@ -130,13 +132,16 @@ namespace WorldOfZuul
                 items.Where(item => item.RoomNumber == player.Position).ToList());
 
                 screen.Display();
-                pollutionMeter.Draw();
 
                 char input = parser.ReadAction(possibleMoves);
 
                 action.Execute(input);
                 if(pollutionMeter.IncreasePollution()){
-                    quizer.AskQuestion();
+                    continuePlaying = quizer.AskQuestion();
+                    if(continuePlaying)
+                    {
+                        pollutionMeter.PollutionLevel = 0;
+                    }
                 }
                 if(pollutionMeter.PollutionLevel >= 100){
                                 ConsoleUtils.ClearConsole();
@@ -185,6 +190,7 @@ namespace WorldOfZuul
                 Console.WriteLine(source);
             }
             }
+            action.Execute('q');
         }
     }
 }
