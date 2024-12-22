@@ -8,7 +8,9 @@ namespace WorldOfZuul
         private const int BarLength = 25;
         private string PollutionArt = "     Pollution: [                         ] ";
         private char Symbol = '■';
-        private const int StepAmount = 1;
+        private int index = 0;
+        private const double StepAmount = 1.8;
+        List<int> thresholds = new List<int> { 15, 30, 45, 70, 80, 1000 };
 
         public PollutionMeter()
         {
@@ -34,7 +36,12 @@ namespace WorldOfZuul
         {
             PollutionLevel = Math.Min(PollutionLevel + increaseAmount, MaxPollutionLevel);
             // Draw();
-            return PollutionLevel == MaxPollutionLevel;
+            if(PollutionLevel >= thresholds[index])
+            {
+                index++;
+                return true;
+            }
+            return false;
         }
 
         public bool DecreasePollution(double decreaseAmount = StepAmount)
